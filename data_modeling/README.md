@@ -3,7 +3,7 @@
 
 
 # Table of Contents
-- [Introduction to Data Modeling](#introduction-to-data-modeling)
+- A. [Introduction to Data Modeling](#introduction-to-data-modeling)
   - [Key concepts](#key-concepts)
     - [Relational Databases](#relational-databases)
       - [Advantages of Using a Relational Database](#advantages-of-using-a-relational-database)
@@ -19,7 +19,7 @@
       - [Creating a Database](#creating-a-database)
     - [Cassandra](#cassandra)
       - [Starting and Stopping Cassandra](#starting-and-stopping-cassandra)
-- [Relational Data Models](#relational-data-models)
+- B. [Relational Data Models](#relational-data-models)
    - [OLAP vs OLTP](#olap-vs-oltp)
       - [Online Analytical Processing (OLAP)](#online-analytical-processing-olap)
       - [Online Transactional Processing (OLTP)](#online-transactional-processing-oltp)
@@ -36,15 +36,15 @@
             - [Benefits of Star Schema](#benefits-of-star-schema)
             - [Drawbacks of Star Schema](#drawbacks-of-star-schema)
          - [Snowflake Schema](#snowflake-schema)
-- [Upsert in PostgreSQL](#upsert-in-postgresql)
-   - [INSERT Statement](#insert-statement)
-      - [Example: Creating a Customer Address Table](#example-creating-a-customer-address-table)
-      - [Inserting Data](#inserting-data)
-   - [Handling Conflicts with ON CONFLICT](#handling-conflicts-with-on-conflict)
-      - [Scenario: Avoiding Duplicate Customer IDs](#scenario-avoiding-duplicate-customer-ids)
-      - [Scenario: Updating Existing Details](#scenario-updating-existing-details)
+  - [Upsert in PostgreSQL](#upsert-in-postgresql)
+     - [INSERT Statement](#insert-statement)
+        - [Example: Creating a Customer Address Table](#example-creating-a-customer-address-table)
+        - [Inserting Data](#inserting-data)
+     - [Handling Conflicts with ON CONFLICT](#handling-conflicts-with-on-conflict)
+        - [Scenario: Avoiding Duplicate Customer IDs](#scenario-avoiding-duplicate-customer-ids)
+        - [Scenario: Updating Existing Details](#scenario-updating-existing-details)
 
-# Introduction to Data Modeling
+# A. Introduction to Data Modeling
 
 ## Key concepts
 
@@ -64,13 +64,23 @@ in the event of errors, power failures, and thus maintain data integrity.
 #### ACID transactions
 Properties of database transactions intended to guarantee validity even in the event of errors or power failures.
 
-- Atomicity: The whole transaction is processed or nothing is processed. A commonly cited example of an atomic transaction is money transactions between two bank accounts. The transaction of transferring money from one account to the other is made up of two operations. First, you have to withdraw money in one account, and second you have to save the withdrawn money to the second account. An atomic transaction, i.e., when either all operations occur or nothing occurs, keeps the database in a consistent state. This ensures that if either of those two operations (withdrawing money from the 1st account or saving the money to the 2nd account) fail, the money is neither lost nor created. Source Wikipedia for a detailed description of this example.
+- Atomicity: The whole transaction is processed or nothing is processed. A commonly cited example of an atomic transaction 
+is money transactions between two bank accounts. The transaction of transferring money from one account to the other 
+is made up of two operations. First, you have to withdraw money in one account, and second you have to save the withdrawn 
+money to the second account. An atomic transaction, i.e., when either all operations occur or nothing occurs, keeps the 
+database in a consistent state. This ensures that if either of those two operations (withdrawing money from the 1st 
+account or saving the money to the 2nd account) fail, the money is neither lost nor created. 
+- Consistency: Only transactions that abide by constraints and rules are written into the database, otherwise the
+database keeps the previous state. The data should be correct across all rows and tables. 
 
-- Consistency: Only transactions that abide by constraints and rules are written into the database, otherwise the database keeps the previous state. The data should be correct across all rows and tables. Check out additional information about consistency on Wikipedia.
+- Isolation: Transactions are processed independently and securely, order does not matter. A low level of isolation 
+enables many users to access the data simultaneously, however this also increases the possibilities of concurrency 
+effects (e.g., dirty reads or lost updates). On the other hand, a high level of isolation reduces these chances of 
+concurrency effects, but also uses more system resources and transactions blocking each other. 
 
-- Isolation: Transactions are processed independently and securely, order does not matter. A low level of isolation enables many users to access the data simultaneously, however this also increases the possibilities of concurrency effects (e.g., dirty reads or lost updates). On the other hand, a high level of isolation reduces these chances of concurrency effects, but also uses more system resources and transactions blocking each other. Source: Wikipedia
-
-- Durability: Completed transactions are saved to database even in cases of system failure. A commonly cited example includes tracking flight seat bookings. So once the flight booking records a confirmed seat booking, the seat remains booked even if a system failure occurs. Source: Wikipedia.
+- Durability: Completed transactions are saved to database even in cases of system failure. A commonly cited example 
+includes tracking flight seat bookings. So once the flight booking records a confirmed seat booking, the seat remains 
+booked even if a system failure occurs. 
 
 #### When Not to Use a Relational Database
 - Have large amounts of data: Relational Databases are not distributed databases and because of this they can only scale vertically by adding more storage in the machine itself. You are limited by how much you can scale and how much data you can store on one machine. You cannot add more machines like you can in NoSQL databases.
@@ -190,18 +200,30 @@ To stop Apache Cassandra running on your Mac, use one of the following methods:
     pkill -f CassandraDaemon
     ```
 
-# Relational Data Models
+# B. Relational Data Models
 
 ## OLAP vs OLTP
+
+while relational databases and NoSQL databases provide the foundational data storage and management systems, OLTP and 
+OLAP represent the different types of processing and analysis that can be performed on this data.
 
 ### Online Analytical Processing (OLAP)
 - Databases optimized for OLAP workloads are designed for complex analytical and ad hoc queries, including aggregations.
 - These databases are primarily optimized for read operations, making them suitable for data analysis and reporting.
+- **Usage**: Used in data warehousing, business reporting, financial forecasting, etc.
+- **Database Types**: Often relational databases are used, but NoSQL databases are also becoming popular for OLAP due to 
+their ability to handle large, diverse data sets efficiently.
+- **Schema Design**: The schema in OLAP systems is often denormalized. A common approach is to use a star schema or 
+snowflake schema, which organizes data into fact and dimension tables. This denormalization improves query performance 
+but can lead to data redundancy.
 
 ### Online Transactional Processing (OLTP)
 - OLTP databases are optimized for handling large volumes of less complex queries.
 - They support a mix of read, insert, update, and delete operations.
-- The key distinction is analytics (A) vs transactions (T): OLTP is used for direct transactions (e.g., checking the price of a shoe), while OLAP is used for analytical queries (e.g., calculating the total stock of shoes sold by a store).
+- **Usage**: Common in retail sales, financial transactions, etc.
+- **Database Types**: Traditionally associated with relational databases, but increasingly implemented with NoSQL for scalability.
+- **Schema Design**: The schema in OLTP systems is usually normalized. Normalization reduces data redundancy and improves 
+data integrity. It is structured to handle a large number of small transactions.
 
 ## Normalization for Transactional Databases (OLTP)
 Normalization in OLTP databases focuses on data integrity and minimizing redundancy.
@@ -210,7 +232,8 @@ Normalization in OLTP databases focuses on data integrity and minimizing redunda
 
 ### Objectives of Normal Form
 - 3NF (Third Normal Form) is often the starting point for designing OLTP databases.
-- Objectives include avoiding unwanted insertions, updates, and deletion dependencies, reducing the need for refactoring with new data types, making the model informative and neutral to query statistics.
+- Objectives include avoiding unwanted insertions, updates, and deletion dependencies, reducing the need for refactoring 
+with new data types, making the model informative and neutral to query statistics.
 
 ### Normal Forms
 - **First Normal Form (1NF)**:
@@ -223,7 +246,10 @@ Normalization in OLTP databases focuses on data integrity and minimizing redunda
   - All columns in the table must rely on the Primary Key.
 - **Third Normal Form (3NF)**:
   - Fulfillment of all 2NF criteria.
-  - No transitive dependencies.
+  - No transitive dependencies. This occurs when a non-prime attribute depends on another non-prime attribute. In 3NF, 
+  each non-prime attribute must directly depend on the primary key and not through some other non-prime attribute. 
+  (attributes that are not part of any candidate key). In practical terms, achieving 3NF often leads to the creation of 
+  additional tables.
 
 ## Denormalization for analytical databases (OLAP)
 
@@ -252,6 +278,7 @@ planning and a clear understanding of the system's usage patterns and performanc
 
 ### Star Schema and Snowflake Schema
 Two of the most common types of schemas are star and snowflake. The type of schema used depends on the business use case.
+Star is a special case of snowflake schema. 
 
 #### Fact and Dimension Tables
 
@@ -268,12 +295,18 @@ Two of the most common types of schemas are star and snowflake. The type of sche
 - Dimension table contains the reference information about the data in the fact table and may include hierarchies and 
 additional descriptive data.
 
+![Fact and dimension tables](./images/dimension-fact-tables.png "Fact and dimension tables")
+
+
+
 #### Star Schema
 
 - Star schema is the simplest style of data mart schema and is widely used in data warehousing systems.
 - It consists of one central fact table surrounded by dimension tables.
 - The schema gets its name due to its resemblance to a star shape, where the fact table is at the center and dimension
 tables represent the star's points.
+
+The picture just above shows a star schema with a fact table at the center surrounded by dimension tables. 
 
 ##### Benefits of Star Schema
 
@@ -299,6 +332,8 @@ when dealing with slowly changing dimensions. This can complicate trend analysis
 
 #### Snowflake Schema
 
+![snowflake_schema](./images/snowflake_schema.png "snowflake schema")
+
 - The snowflake schema is an extension of the star schema used in data warehousing, characterized by a more complex structure.
 - It consists of a central fact table connected to multiple dimension tables, which are further normalized into 
 sub-dimension tables, resembling a snowflake pattern.
@@ -309,15 +344,15 @@ normalization up to the Second Normal Form (2NF). This reduces redundancy in the
 - The additional levels of normalization in snowflake schemas can lead to more complex query structures and potentially 
 slower query performance due to the increased number of joins.
 
-# Upsert in PostgreSQL
+## Upsert in PostgreSQL
 
 In RDBMS language, the term "upsert" refers to inserting a new row in an existing table, or updating the row if it already exists. This is often achieved in PostgreSQL using the `INSERT` statement combined with the `ON CONFLICT` clause.
 
-## INSERT Statement
+### INSERT Statement
 
 The `INSERT` statement adds new rows to a table. Values for specific target columns can be added in any order.
 
-### Example: Creating a Customer Address Table
+#### Example: Creating a Customer Address Table
 
 First, let's define a customer address table:
 
@@ -330,7 +365,7 @@ CREATE TABLE IF NOT EXISTS customer_address (
 );
 ```
 
-### Inserting Data
+#### Inserting Data
 
 Now, let's insert data into this table:
 
@@ -340,9 +375,9 @@ INSERT INTO customer_address (customer_id, customer_street, customer_city, custo
 VALUES
     (432, '758 Main Street', 'Chicago', 'IL');
 ```
-## Handling Conflicts with ON CONFLICT
+### Handling Conflicts with ON CONFLICT
 
-### Scenario: Avoiding Duplicate Customer IDs
+#### Scenario: Avoiding Duplicate Customer IDs
 
 If we don't want to update the row if it already exists, we can use the `ON CONFLICT` clause with the `DO NOTHING` option:
 
@@ -354,7 +389,7 @@ ON CONFLICT (customer_id)
 DO NOTHING;
 ```
 
-### Scenario: Updating Existing Details
+#### Scenario: Updating Existing Details
 
 For updating details of an existing customer:
 
