@@ -44,6 +44,7 @@
         - [Scenario: Avoiding Duplicate Customer IDs](#scenario-avoiding-duplicate-customer-ids)
         - [Scenario: Updating Existing Details](#scenario-updating-existing-details)
 
+
 # A. Introduction to Data Modeling
 
 ## Key concepts
@@ -405,3 +406,66 @@ when this UPSERT operation is executed, PostgreSQL will first try to insert the 
 into the customer_address table. If a row with customer_id = 432 already exists, it will not insert a new row. Instead, 
 it will update the existing row's customer_street column with the value '923 Knox Street, Suite 1'.
 
+# C. NoSQL Data Models
+
+NoSQL = Not Only SQL
+
+## Distributed Databases
+
+- In a distributed database, in order to have high availability, we need to have multiple nodes. Nodes will fail so I
+need to have copy of my data spread across multiple nodes.
+- **Eventual Consistency**: In a distributed database, when a write occurs, it is not guaranteed that all copies of the
+data will be consistent. It will take some time for the data to be copied across all nodes. This is called eventual
+consistency. In practise data is usually consistent within a few milliseconds.
+
+## CAP Theorem
+
+CAP theorem: it is impossible for a distributed data store to simultaneously provide more than two out of the following
+three guarantees:
+- Consistency: Every read receives the most recent write or an error
+- Availability: Every request receives a (non-error) response, without the guarantee that it contains the most recent
+- Partition Tolerance: The system continues to operate despite an arbitrary number of messages being dropped (or delayed) 
+by the network between nodes
+
+Apache Cassandra is an example of database that is highly available and partition tolerant at the expense
+of consistency.It is an AP (Availability and Partition Tolerant) database.
+
+## Data Modeling in Apache Cassandra
+- Denormalization is a must
+- Denormalization must be done for fast reads
+- Apache Cassandra has been optimized for fast writes
+- Always think queries first
+- One table per query is a great strategy
+- Apache Cassandra does not allow for JOINs between tables
+
+# CQL (Cassandra Query Language)
+Cassandra query language is the way to interact with the database and is very similar to SQL. The following are not supported by CQL
+- JOINS 
+- GROUP BY 
+- Subqueries
+
+## Primary Key
+key concepts:
+- A primary key is a unique identifier for each row in a table. It also determines the distribution of data across the nodes.
+- The first element of the primary key is the partition key. The partition key determines which node the data is stored on.
+- The primary key can be made up of just the partition key or the partition key and additional clustering columns.
+
+Further points:
+- A Simple PRIMARY KEY is just one column that is also the PARTITION KEY. A Composite PRIMARY KEY is made up of more 
+than one column and will assist in creating a unique value and in your retrieval queries
+- Additional data with same primary key will overwrite existing data. This is because the primary key is unique.
+- The partition key must be chosen wisely so that the data is distributed evenly and queries can be executed in parallel.
+
+## Clustering Columns
+- Clustering columns are used to sort the data within a partition.
+- More than one clustering column can be added (up to two billion according to the documentation).
+- The clustering columns will sort the data in the order they were added to the table.
+
+## WHERE clause
+- Data Modeling in Apache Cassandra is query focused, and that focus needs to be on the WHERE clause
+- Failure to include a WHERE clause is recommended.
+- The WHERE clause needs to include all the columns that are part of the partition key. 
+- The WHERE clause may include clustering columns, but this is not required. If it does, they must be in the order
+they were defined in the PRIMARY KEY
+- you can also use column names that are not part of the primary key in the WHERE clause, but you must include all the
+columns that make up the primary key.
