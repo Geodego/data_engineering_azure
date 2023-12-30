@@ -333,7 +333,7 @@ when dealing with slowly changing dimensions. This can complicate trend analysis
 
 #### Snowflake Schema
 
-![snowflake_schema](./images/snowflake_schema.png "snowflake schema")
+![snowflake_schema](./0-images/snowflake_schema.png "snowflake schema")
 
 - The snowflake schema is an extension of the star schema used in data warehousing, characterized by a more complex structure.
 - It consists of a central fact table connected to multiple dimension tables, which are further normalized into 
