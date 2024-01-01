@@ -76,6 +76,24 @@ Dimension Tables:
 - Dimension tables columns contain attributes like the store at which an item is purchased, or the customer who made 
 the call, etc.
 
+Reference constraints in a star schema, are crucial for maintaining data integrity and ensuring accurate, reliable 
+reporting:
+- **Reference Constraints**: Rules established to maintain consistent relationships between the tables in a star schema, 
+often implemented as foreign key constraints.
+
+- **Foreign Key Constraints**: Ensure that each entry in the fact table corresponds to a valid record in a dimension 
+table, linking data like sales records in the fact table to specific entities in dimension tables such as products and customers.
+
+- **Data Integrity**: These constraints prevent orphan records in the fact table and ensure that data in dimension 
+tables can't be deleted or altered in a way that invalidates the relationships.
+
+- **Simplified Queries and Analysis**: By enforcing clear relationships between different data elements, these 
+constraints make it easier to write queries and perform analysis.
+
+- **Performance Optimization**: While adding overhead during data loading, reference constraints often improve query 
+performance by enabling the database to optimize query execution plans more effectively.
+
+
 ### Example: The DVD Rentals Sample Database. From 3NF to Star schema
 
 ![dvd-rental-db](./0-images/dvd-rental-db.png "dvd-rental-db.png")
@@ -94,7 +112,9 @@ dimensions from them.
 - Load:
   - Insert into facts & dimension tables
 
-### DWH Architecture, Kimball's Bus Architecture
+### DWH Architectures
+
+#### Kimball's Bus Architecture
 
 ETL: A Closer Look
 - Extracting:
@@ -108,6 +128,76 @@ ETL: A Closer Look
   - Structuring and loading the data into the dimensional data model
 
 ![kimball](./0-images/kimball.png "kimball.png")
+
+#### Independent Data Marts
+
+
+A data mart is a subset of a data warehouse that is usually oriented to a specific business line or team. Whereas data 
+warehouses have enterprise-wide depth, the information in data marts pertains to a single department or business unit.
+
+Data marts are small in size and are more flexible than a data warehouse but are limited in the scope of information. 
+They are used by small groups within an organization to analyze and report on specific business functions. For instance, 
+the marketing department of a large company might use a data mart to track web analytics or sales performance.
+
+- Departments have separate ETL processes & dimensional models
+- These separate dimensional models are called “Data Marts”
+- Different fact tables for the same events, no conformed dimensions
+- Uncoordinated efforts can lead to inconsistent views
+- Despite awareness of the emergence of this architecture from departmental autonomy, it is generally discouraged
+- 
+![independent_DMarts](./0-images/independent_DMarts.png "independent_DMarts.png")
+
+#### Inmon's Corporate Information Factory
+
+- 2 ETL Process
+  - Source systems → 3NF database (data acquisition)
+  - 3NF database → Departmental Data Marts (data delivery)
+- The 3NF database acts as an enterprise-wide data store.
+  - Single integrated source of truth for data-marts
+  - Could be accessed by end-users if needed
+- Data marts are dimensionally modeled & unlike Kimball’s dimensional models, they are mostly aggregated
+
+![inmon_cif](./0-images/inmon_cif.png "inmon_cif.png")
+
+#### Best of Both Worlds: Hybrid Kimball Bus & Inmon CIF
+
+- Removes Data Marts
+- Exposes the enterprise data warehouse
+
+![hybrid_kimball_inmon](./0-images/hybrid_kimball_inmon.png "hybrid_kimball_inmon.png")
+
+### OLAP cubes
+
+Once we have a star schema, we can create OLAP cubes.
+
+- An OLAP cube is an aggregation of at a number of dimensions
+  - Movie, Branch, Month
+- Easy to communicate to business users
+
+![olap_cubes](./0-images/olap_cubes.png "olap_cubes.png")
+
+#### Roll Up and Drill Down
+
+- Roll-up: Sum up the sales of each city by Country: e.g. US, France (less columns in branch dimension)
+- Drill-Down: Decompose the sales of each city into smaller districts (more columns in branch dimension)
+- The OLAP cubes should store the finest grain of data (atomic data), in case we need to drill-down to the lowest level, 
+e.g Country -> City -> District -> street ...
+
+#### Slice and Dice
+
+- Slice: Reducing N dimensions to N-1 dimensions by restricting one dimension to a single value
+- Dice: Same dimensions but computing a sub-cube by restricting, some of the values of the dimensions
+
+#### Query Optimization
+
+- Do one pass through the facts table (e.g. with "GROUP BY CUBE(movie, branch, month)"). 
+- This will aggregate all possible combinations of grouping.
+
+
+
+
+
+
 
 ### Definitions
 - **Schema**: The structure of data described in a formal way supported by the database management system.
