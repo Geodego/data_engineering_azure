@@ -211,6 +211,128 @@ e.g Country -> City -> District -> street ...
   dimensional or normalized data store. It usually keeps years of history and is queried for business intelligence 
   or other analytical activities. It is typically updated in batches, not every time a transaction happens in the source system. -
 
+### How do we serve OLAP cubes?
+
+- Traditional way: Pre-aggregate the OLAP cubes and save them on a special purpose non-relational database (MOLAP).
+  (You would by a OLAP server as Microsoft SQL Server Analysis Services, Oracle OLAP or SAP BW)
+- Current popular approach: compute the OLAP cubes on the fly from the existing relational databases where the 
+dimensional model resides (ROLAP)
+
+### Columnar vs row storage
+Columnar storage is faster than raw storage for queries. PostgreSQL and Redshift have extensions that allow usage of 
+columnar tables. With these extensions, you can use both raw storage tables and columnar storage tables in the same 
+database. The Postgre columnar storage extension used here is cstore_fdw by citus_data
+https://github.com/citusdata/cstore_fdw.
+
+### Useful SQL instructions
+
+#### TO_CHAR
+Example of usage:
+```sql
+SELECT DISTINCT(TO_CHAR(payment_date :: DATE, 'yyyyMMDD')::integer) AS date_key
+FROM payment;
+```
+Explanation of the query:
+- **`TO_CHAR(payment_date :: DATE, 'yyyyMMDD')`**:
+  - Converts the `payment_date` column to a string.
+  - The `:: DATE` casts the `payment_date` to a date type.
+  - `TO_CHAR` formats it as a string in the 'yyyyMMdd' format, e.g., '20240101' for January 1st, 2024.
+
+- **`::integer`**:
+  - Converts the formatted date string to an integer. 
+  - E.g., '20240101' becomes 20240101.
+
+- **`SELECT DISTINCT`**:
+  - Selects unique values only from the converted dates.
+  - Ensures that each date appears only once in the output, even if it occurs multiple times in the `payment_date` column.
+
+- **`AS date_key`**:
+  - Renames the output column of the query to `date_key`.
+
+The overall purpose of this query is to extract unique dates from the `payment` table, format them as integers in 'yyyyMMdd' format, and list them under the column `date_key`.
+
+#### CASE WHEN
+The `CASE WHEN` statement in SQL is used for implementing conditional logic within a query. It's akin to if-else 
+conditions in other programming languages. There are two types of `CASE` expressions.
+Here's a basic example of a CASE WHEN in use:
+```sql
+SELECT 
+    EmployeeName, 
+    CASE 
+        WHEN Salary > 50000 THEN 'High'
+        ELSE 'Low'
+    END as SalaryLevel
+FROM Employees;
+```
+#### ISODOW
+The `ISODOW` function in SQL is used for extracting the ISO weekday number from a date. In the ISO-8601 standard, 
+the week starts on Monday (denoted as 1) and ends on Sunday (denoted as 7).
+
+Example:
+```sql
+SELECT OrderDate, EXTRACT(ISODOW FROM OrderDate) AS ISOWeekday
+FROM Orders;
+```
+
+
+#### ETL the data from 3NF tables to Facts & Dimension Tables
+```sql
+INSERT INTO dimDate (date_key, date, is_weekend)
+SELECT DISTINCT(TO_CHAR(payment_date :: DATE, 'yyyyMMDD')::integer) AS date_key,
+       date(payment_date)                                           AS date,
+       CASE WHEN EXTRACT(ISODOW FROM payment_date) IN (6, 7) THEN true ELSE false END AS is_weekend
+FROM payment;
+```
+
+#### GROUP BY CUBE
+
+The `CUBE` function in SQL is a tool used in `GROUP BY` clauses. It enables the creation of subtotals and 
+grand totals across multiple dimensions. The key features of `CUBE` are:
+- **Comprehensive Aggregations**: `GROUP BY CUBE (dim1, dim2, ...)` computes all possible combinations of aggregations 
+for the specified dimensions. It generates subtotals for all combinations, along with a grand total.
+- **Efficiency in Reporting**: By materializing the view created with `CUBE`, you can significantly reduce repetitive 
+aggregation queries, streamlining reporting and analysis processes.
+
+
+
+example: 
+```SQL
+SELECT dimDate.month,dimStore.country,sum(sales_amount) as revenue
+FROM factSales
+JOIN dimDate  on (dimDate.date_key   = factSales.date_key)
+JOIN dimStore on (dimStore.store_key = factSales.store_key)
+GROUP by cube(dimDate.month,  dimStore.country);
+```
+
+#### GROUPING SETS
+
+GROUPING SETS in SQL offer a way to control the granularity of groupings in data aggregation. This feature allows for 
+specifying exact groupings of interest in a query.
+
+For instance, consider the SQL query:
+```sql
+GROUP BY GROUPING SETS ((A), (B), (A, B))
+```
+This query enables aggregation by A, by B, and then by both A and B. It's important to note that, unlike the CUBE 
+operation, GROUPING SETS do not automatically include a grand total aggregation.
+
+The grouping set equivalent of the above `CUBE` example would be:
+```SQL
+SELECT dimDate.month, dimStore.country, sum(sales_amount) as revenue
+FROM factSales
+JOIN dimDate  on (dimDate.date_key   = factSales.date_key)
+JOIN dimStore on (dimStore.store_key = factSales.store_key)
+GROUP BY GROUPING SETS (
+    (dimDate.month, dimStore.country), -- Combination of month and country
+    (dimDate.month),                   -- Only by month
+    (dimStore.country),                -- Only by country
+    ()                                 -- Grand total (no grouping)
+);
+```
+
+**Warning**: before using grouping sets or CUBE, clean your data to avoid any confusion between the `none` used in the 
+grouping, meaning the general aggregation, and any `none`in the data. 
+
 
 
 ## ELT and Data Warehouse Technology in the Cloud
