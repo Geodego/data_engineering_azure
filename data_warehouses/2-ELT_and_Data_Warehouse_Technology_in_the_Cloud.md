@@ -67,11 +67,13 @@ In a cloud data warehouse the key components are:
 - data sources
 - ELT/ETL pipelines
 - analytics applications
-These components are  onnected by the cloud data pipeline.
+
+These components are  connected by the cloud data pipeline.
 
 ![cloud_data_pipeline](./0-images/chap2/cloud_data_pipeline.png "cloud_data_pipeline")
 
 ### Cloud Managed SQL Storage
+
 ![sql_storage](./0-images/chap2/sql_storage.png "sql_storage")
 
 
@@ -139,7 +141,15 @@ They are two primary ways Cloud Service Providers offer NoSQL databases:
 
 ## Cloud ETL Pipeline Services
 
-ETL / ELT processes rely on data pipelines often built using cloud-based tools. Major Cloud providers service are:
+ETL / ELT processes rely on data pipelines often built using cloud-based tools. These data pipeline tools can be viewed
+as a combination of :
+- orchestration tools
+- integration tools
+- monitoring tools
+
+![cloud_etl_pipeline](./0-images/chap2/cloud_etl_pipeline.png "cloud_etl_pipeline")
+
+Major Cloud providers service are:
 - Azure Data Factory 
 - AWS Glue 
 - GCP Dataflow
@@ -182,3 +192,13 @@ messaging protocols and is suitable for complex routing.
   
 - **Redis Streams**: A component of the Redis database, offering capabilities for handling streaming data. Redis Streams 
 is more limited compared to dedicated streaming platforms but is still effective for certain use cases.
+
+## Cloud Data Warehouse Solutions
+
+The last piece of the puzzle for Cloud Data Warehousing is the data warehouse itself. Modern cloud data warehouse 
+solutions seamlessly combine elements from Cloud Storage and Cloud Pipelines with powerful analytics capabilities. 
+Each of the three major cloud providers has its own flavor of Cloud Data Warehouse that works seamlessly with its other 
+cloud data engineering offerings:
+- Azure Synapse
+- Amazon Redshift
+- GCP Big Query
