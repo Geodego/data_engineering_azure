@@ -1,5 +1,34 @@
 # Azure Data Warehouse Technology 
 
+## Table of Contents
+
+1. [Introduction to Cloud Data Warehouses with Azure](#introduction-to-cloud-data-warehouses-with-azure)
+   - [Data Source and Ingestion](#data-source-and-ingestion)
+   - [Data Storage and Analysis](#data-storage-and-analysis)
+   - [Data Visualization](#data-visualization)
+
+2. [Expert Perspective: Data Warehouse on Azure](#expert-perspective-data-warehouse-on-azure)
+   - [Strengths of Azure](#strengths-of-azure)
+   - [Cautions for Azure Data Warehousing](#cautions-for-azure-data-warehousing)
+   - [Overall Assessment](#overall-assessment)
+
+3. [Azure Data Warehouse Solutions](#azure-data-warehouse-solutions)
+   - [Data Warehouse Analytics Solutions](#data-warehouse-analytics-solutions)
+     - [Azure Synapse](#azure-synapse)
+     - [Azure Databricks](#azure-databricks)
+   - [Supporting Tools for Cloud Data Warehouse](#supporting-tools-for-cloud-data-warehouse)
+     - [Cloud Data Storage](#cloud-data-storage)
+     - [ETL / ELT Pipelines](#etl--elt-pipelines)
+
+4. [Azure Components](#azure-components)
+   - [Cloud Data Storage and ETL / ELT Pipelines](#cloud-data-storage-and-etl--elt-pipelines)
+
+5. [Additional Resources](#additional-resources)
+
+6. [When to Use Azure Components and Solutions](#when-to-use-azure-components-and-solutions)
+   - [Use Cases for Azure Data Warehouse Components](#use-cases-for-azure-data-warehouse-components)
+
+
 ## Introduction to Cloud Data Warehouses with Azure
 
 Azure is a popular platform choice for building data warehouses in the Cloud.

@@ -11,6 +11,31 @@ single application.
 
 ![cloud_dw_tech](./0-images/chap2/cloud_dw_tech.png "cloud_dw_tech")
 
+## Table of Contents
+
+1. [Expert Perspective: Cloud Data Warehouses](#expert-perspective-cloud-data-warehouses)
+   - [Evolution from Traditional to Modern Cloud Infrastructures](#evolution-from-traditional-to-modern-cloud-infrastructures)
+   - [Key Benefits of Cloud Data Warehouses](#key-benefits-of-cloud-data-warehouses)
+
+2. [From ETL to ELT](#from-etl-to-elt)
+   - [ELT in Cloud Environments](#elt-in-cloud-environments)
+   - [Origin and Differences Between ETL and ELT](#origin-and-differences-between-etl-and-elt)
+   - [Benefits of ELT](#benefits-of-elt)
+   - [Additional Resources](#additional-resources)
+
+3. [Cloud Storage](#cloud-storage)
+   - [Key Components of Cloud Data Warehouses](#key-components-of-cloud-data-warehouses)
+   - [Cloud Managed SQL Storage](#cloud-managed-sql-storage)
+   - [Cloud Managed NoSQL Storage](#cloud-managed-nosql-storage)
+
+4. [Cloud ETL Pipeline Services](#cloud-etl-pipeline-services)
+   - [Overview and Components](#overview-and-components)
+   - [Streaming Data Ingestion and Processing](#streaming-data-ingestion-and-processing)
+
+5. [Cloud Data Warehouse Solutions](#cloud-data-warehouse-solutions)
+   - [Overview and Provider-Specific Solutions](#overview-and-provider-specific-solutions)
+
+
 ## Expert Perspective: Cloud Data Warehouses
 
 Data warehouses have been around for a long time but recently they have received significant attention in the data 
