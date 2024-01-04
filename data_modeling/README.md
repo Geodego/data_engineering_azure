@@ -12,13 +12,7 @@
     - [Introduction to NoSQL Databases](#introduction-to-nosql-databases)
       - [NoSQL Database Implementations](#nosql-database-implementations)
       - [When to use a NoSQL Database](#when-to-use-a-nosql-database)
-  - [Installation of PostgreSQL and Cassandra](#installation-of-postgresql-and-cassandra)
-    - [Installation of PostgreSQL on Mac OS X](#installation-of-postgresql-on-mac-os-x)
-      - [Starting and Stopping PostgreSQL](#starting-and-stopping-postgresql)
-      - [Interacting with PostgreSQL](#interacting-with-postgresql)
-      - [Creating a Database](#creating-a-database)
-    - [Cassandra](#cassandra)
-      - [Starting and Stopping Cassandra](#starting-and-stopping-cassandra)
+  
 - B. [Relational Data Models](#relational-data-models)
    - [OLAP vs OLTP](#olap-vs-oltp)
       - [Online Analytical Processing (OLAP)](#online-analytical-processing-olap)
@@ -44,6 +38,13 @@
         - [Scenario: Avoiding Duplicate Customer IDs](#scenario-avoiding-duplicate-customer-ids)
         - [Scenario: Updating Existing Details](#scenario-updating-existing-details)
 
+- C. [Installation of PostgreSQL and Cassandra](#installation-of-postgresql-and-cassandra)
+    - [Installation of PostgreSQL on Mac OS X](#installation-of-postgresql-on-mac-os-x)
+      - [Starting and Stopping PostgreSQL](#starting-and-stopping-postgresql)
+      - [Interacting with PostgreSQL](#interacting-with-postgresql)
+      - [Creating a Database](#creating-a-database)
+    - [Cassandra](#cassandra)
+      - [Starting and Stopping Cassandra](#starting-and-stopping-cassandra)
 
 # A. Introduction to Data Modeling
 
@@ -108,98 +109,6 @@ booked even if a system failure occurs.
 - Need high throughput: While ACID transactions bring benefits they also slow down the process of reading and writing data. If you need very fast reads and writes using a relational database may not suit your needs.
 - Need a flexible schema: Flexible schema can allow for columns to be added that do not have to be used by every row, saving disk space.
 - Need high availability: Relational databases have a single point of failure. When that database goes down, a failover to a backup system must happen and takes time.
-
-
-## Installation of PostgreSQL and Cassandra
-### Installation of PostgreSQL on Mac OS X
-
-To install Postgres on Mac OS X, follow the instructions provided [here](https://www.codementor.io/@engineerapart/getting-started-with-postgresql-on-mac-osx-are8jcopb).
-
-#### Starting and Stopping PostgreSQL
-
-To **start** PostgreSQL, use the following command in your terminal:
-
-```bash
-brew services start postgresql
-```
-To stop PostgreSQL, use:
-
-```bash
-brew services stop postgresql
-```
-
-you can also start postgres manually by running the following command:
-    
-```bash 
-pg_ctl -D /usr/local/var/postgres -l logfile start
-```
-After running the pg_ctl command, you can verify that PostgreSQL has started successfully by using the command:
-
-```bash
-ps aux | grep postgres
-```
-
-
-
-
-#### Interacting with PostgreSQL
-
-After starting the PostgreSQL server, you can use the `psql` command-line tool to interact with the database.
-
-When connecting to PostgreSQL for the first time, especially when no specific database has been created yet, you can 
-connect to the default database provided by PostgreSQL. This database is usually named postgres, which is a default 
-administrative database.
-    
-```bash
-psql -U your_username -d postgres
-```
-Replace [username] with your PostgreSQL username. If you haven't created any users yet, PostgreSQL typically creates a
-default user with the same name as your operating system's current user.
-
-Once you are in the command-line interface of PostgreSQL (psql), you can exit by typing the following command:
-
-```bash
-\q
-```
-Just type \q and then press Enter. This will quit the psql interface and return you to the standard Mac terminal prompt.
-
-With PostgreSQL running, you can connect to it for a specific database using the psql command-line tool:
-
-```bash
-psql -U your_username -d your_database
-```
-
-#### Creating a Database
-To create a database called 'studentdb', use the following command:
-
-```bash 
-CREATE DATABASE studentdb;
-```
-To create a user called 'student' with password 'student', use the following command:
-
-```bash
-CREATE USER student WITH PASSWORD 'student';
-GRANT ALL PRIVILEGES ON DATABASE studentdb TO student;
-```
-
-### Casssandra
-
-#### starting and stopping cassandra
-
-to start cassandra, run the following command:
-
-```bash
-cassandra -f
-```
-To stop Apache Cassandra running on your Mac, use one of the following methods:
-
-- If Cassandra is Running in the Foreground
-  - Press `Ctrl + C` in the Terminal where Cassandra is running.
-- If Cassandra is Running in the Background
-  - Use the following command in Terminal:
-    ```bash
-    pkill -f CassandraDaemon
-    ```
 
 # B. Relational Data Models
 
@@ -469,3 +378,95 @@ than one column and will assist in creating a unique value and in your retrieval
 they were defined in the PRIMARY KEY
 - you can also use column names that are not part of the primary key in the WHERE clause, but you must include all the
 columns that make up the primary key.
+
+# Installation of PostgreSQL and Cassandra
+
+## Installation of PostgreSQL on Mac OS X
+
+To install Postgres on Mac OS X, follow the instructions provided [here](https://www.codementor.io/@engineerapart/getting-started-with-postgresql-on-mac-osx-are8jcopb).
+
+### Starting and Stopping PostgreSQL
+
+To **start** PostgreSQL, use the following command in your terminal:
+
+```bash
+brew services start postgresql
+```
+To stop PostgreSQL, use:
+
+```bash
+brew services stop postgresql
+```
+
+you can also start postgres manually by running the following command:
+    
+```bash 
+pg_ctl -D /usr/local/var/postgres -l logfile start
+```
+After running the pg_ctl command, you can verify that PostgreSQL has started successfully by using the command:
+
+```bash
+ps aux | grep postgres
+```
+
+
+
+
+### Interacting with PostgreSQL
+
+After starting the PostgreSQL server, you can use the `psql` command-line tool to interact with the database.
+
+When connecting to PostgreSQL for the first time, especially when no specific database has been created yet, you can 
+connect to the default database provided by PostgreSQL. This database is usually named postgres, which is a default 
+administrative database.
+    
+```bash
+psql -U your_username -d postgres
+```
+Replace [username] with your PostgreSQL username. If you haven't created any users yet, PostgreSQL typically creates a
+default user with the same name as your operating system's current user.
+
+Once you are in the command-line interface of PostgreSQL (psql), you can exit by typing the following command:
+
+```bash
+\q
+```
+Just type \q and then press Enter. This will quit the psql interface and return you to the standard Mac terminal prompt.
+
+With PostgreSQL running, you can connect to it for a specific database using the psql command-line tool:
+
+```bash
+psql -U your_username -d your_database
+```
+
+### Creating a Database
+To create a database called 'studentdb', use the following command:
+
+```bash 
+CREATE DATABASE studentdb;
+```
+To create a user called 'student' with password 'student', use the following command:
+
+```bash
+CREATE USER student WITH PASSWORD 'student';
+GRANT ALL PRIVILEGES ON DATABASE studentdb TO student;
+```
+
+## Casssandra
+
+### starting and stopping cassandra
+
+to start cassandra, run the following command:
+
+```bash
+cassandra -f
+```
+To stop Apache Cassandra running on your Mac, use one of the following methods:
+
+- If Cassandra is Running in the Foreground
+  - Press `Ctrl + C` in the Terminal where Cassandra is running.
+- If Cassandra is Running in the Background
+  - Use the following command in Terminal:
+    ```bash
+    pkill -f CassandraDaemon
+    ```
