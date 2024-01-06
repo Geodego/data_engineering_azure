@@ -76,7 +76,7 @@ Operational databases:
 Having the same data source for operational & analytical processes is not a good solution. The general solution is the 
 warehouse. We connect to these operational databases and load them to the warehouse. Thats the idea of OLTP vs OLAP.
 
-![oltp-olap_schema](./0-images/chap1/oltp-olap.png "OLTP OLAP schema")
+<img src="./0-images/chap1/oltp-olap.png" alt="oltp-olap.png" width="700"/>
 
 ## Data Warehouse: Technical Perspective
 Goal:
@@ -86,11 +86,11 @@ Goal:
 - handles new questions well
 - secure
 
-Technical paerspective:
+Technical perspective:
 - Extract the data from the source systems used for operations, transform the data, and load it into a dimensional model.
 - Business-user-facing application are needed, with clear visuals - Business Intelligence (BI) apps
 
-![dw-tech-perspective](./0-images/chap1/dw-tech-perspective.png "dw-tech-perspective.png")
+<img src="./0-images/chap1/dw-tech-perspective.png" alt="dw-tech-perspective2.png" width="700"/>
 
 ## Dimensional model
 Goals of the Star Schema:
@@ -114,7 +114,7 @@ often implemented as foreign key constraints.
 
 - **Foreign Key Constraints**: Ensure that each entry in the fact table corresponds to a valid record in a dimension 
 table, linking data like sales records in the fact table to specific entities in dimension tables such as products and 
-- customers.
+customers.
 
 - **Data Integrity**: These constraints prevent orphan records in the fact table and ensure that data in dimension 
 tables can't be deleted or altered in a way that invalidates the relationships.
@@ -128,7 +128,7 @@ performance by enabling the database to optimize query execution plans more effe
 
 ### Example: The DVD Rentals Sample Database. From 3NF to Star schema
 
-![dvd-rental-db](./0-images/chap1/dvd-rental-db.png "dvd-rental-db.png")
+<img src="./0-images/chap1/dvd-rental-db.png" alt="dvd-rental-db.png" width=1000 />
 
 - To master the art of dimensional modelling, ones need to see a lot of schemas and think about how to design facts &
 dimensions from them.
@@ -154,12 +154,12 @@ ETL: A Closer Look
   - Possibly deleting old states
 - Transforming:
   - Integrates many sources together
-  - Possibly cleansing: inconsistencies, duplication, missing values, etc..
+  - Possibly cleaning: inconsistencies, duplication, missing values, etc..
   - Possibly producing diagnostic metadata
 - Loading:
   - Structuring and loading the data into the dimensional data model
 
-![kimball](./0-images/chap1/kimball.png "kimball.png")
+<img src="./0-images/chap1/kimball.png" alt="kimball.png" width="700"/>
 
 ### Independent Data Marts
 
@@ -176,8 +176,8 @@ the marketing department of a large company might use a data mart to track web a
 - Different fact tables for the same events, no conformed dimensions
 - Uncoordinated efforts can lead to inconsistent views
 - Despite awareness of the emergence of this architecture from departmental autonomy, it is generally discouraged
-- 
-![independent_DMarts](./0-images/chap1/independent_DMarts.png "independent_DMarts.png")
+
+<img src="./0-images/chap1/independent_DMarts.png" alt="independent_DMarts.png" width="700"/>
 
 ### Inmon's Corporate Information Factory
 
@@ -189,14 +189,14 @@ the marketing department of a large company might use a data mart to track web a
   - Could be accessed by end-users if needed
 - Data marts are dimensionally modeled & unlike Kimball’s dimensional models, they are mostly aggregated
 
-![inmon_cif](./0-images/chap1/inmon_cif.png "inmon_cif.png")
+<img src="./0-images/chap1/inmon_cif.png" alt="inmon_cif.png" width="700"/>
 
 ### Best of Both Worlds: Hybrid Kimball Bus & Inmon CIF
 
 - Removes Data Marts
 - Exposes the enterprise data warehouse
 
-![hybrid_kimball_inmon](./0-images/chap1/hybrid_kimball_inmon.png "hybrid_kimball_inmon.png")
+<img src="./0-images/chap1/hybrid_kimball_inmon.png" alt="hybrid_kimball_inmon.png" width="700"/>
 
 ## OLAP cubes
 
@@ -206,7 +206,7 @@ Once we have a star schema, we can create OLAP cubes.
   - Movie, Branch, Month
 - Easy to communicate to business users
 
-![olap_cubes](./0-images/chap1/olap_cubes.png "olap_cubes.png")
+<img src="./0-images/chap1/olap_cubes.png" alt="olap_cubes2.png" width="700"/>
 
 ### Roll Up and Drill Down
 

@@ -61,7 +61,7 @@ Microsoft Azure tools to create Cloud Data Warehouse solutions include:
   - Azure Synapse for comprehensive, integrated data warehousing and analytics
     - Synapse integrates with a broad range of data storage and pipelines technologies within the Azure environment
     - Synapse also provides analytics capabilities on top of the selected architecture
-    - ![Azure Synapse Analytics](./0-images/chap3/azure_synapse_analytics.png "Azure Synapse Analytics")
+    - <img src="./0-images/chap3/azure_synapse_analytics.png" alt="Azure Synapse Analytics" width="700"/>
   - Azure Databricks for analytics built on Apache Spark
     - Microsoft Azure provides Databricks optimized for that Azure environment
     - There are three flavors of Databricks optimized in turn for:
@@ -70,20 +70,21 @@ Microsoft Azure tools to create Cloud Data Warehouse solutions include:
       - Machine Learning
     - While Azure Databricks can be utilized in traditional data warehouse architectures, it is maybe more suited for
     data lake and lakehouse architectures
-    - ![Azure Databricks](./0-images/chap3/azure_databricks.png "Azure Databricks")
+    - <img src="./0-images/chap3/azure_databricks.png" alt="Azure Databricks" width="700"/>
 
 Microsoft Azure tools to support Cloud Data Warehouse solutions include:
 
 - **Cloud Data Storage**
   - Azure Data Warehouse Gen 2 for traditional data warehouse architectures
   - Azure Dedicated SQL Pools for relational data storage
-  - semi dtructured or unstructured data storage:
+  - semi-structured or unstructured data storage:
     - Blob storage for file-based storage
     - CosmosDB for NoSQL solutions such as column-oriented or document databases
   
 - **ETL / ELT Pipelines**
   - Azure Data Factory for creating intelligent data integrations and data flows for multiple services
-  - Azure Databricks for utilizing Spark to create ETL pipelines Azure Polybase for using TSQL to query blob storage in 
+  - Azure Databricks for utilizing Spark to create ETL pipelines 
+  - Azure Polybase for using TSQL to query blob storage in 
   support of ELT scenarios
 
 ## Azure Components

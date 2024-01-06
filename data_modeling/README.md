@@ -205,7 +205,7 @@ Star is a special case of snowflake schema.
 - Dimension table contains the reference information about the data in the fact table and may include hierarchies and 
 additional descriptive data.
 
-![Fact and dimension tables](./images/dimension-fact-tables.png "Fact and dimension tables")
+<img src="./0-images/dimension-fact-tables.png" alt="Fact and dimension tables" width="700"/>
 
 
 
@@ -372,7 +372,7 @@ than one column and will assist in creating a unique value and in your retrieval
 
 ## WHERE clause
 - Data Modeling in Apache Cassandra is query focused, and that focus needs to be on the WHERE clause
-- Failure to include a WHERE clause is recommended.
+- Failure to include a WHERE clause is not recommended.
 - The WHERE clause needs to include all the columns that are part of the partition key. 
 - The WHERE clause may include clustering columns, but this is not required. If it does, they must be in the order
 they were defined in the PRIMARY KEY
@@ -452,7 +452,7 @@ CREATE USER student WITH PASSWORD 'student';
 GRANT ALL PRIVILEGES ON DATABASE studentdb TO student;
 ```
 
-## Casssandra
+## Cassandra
 
 ### starting and stopping cassandra
 

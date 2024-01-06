@@ -47,7 +47,7 @@ An Automated Enterprise BI Architecture has the same components with the Azure B
 orchestrated using Azure Data Factory.
 
 ### Additional Resource
-Microsof t documentation on [Azure Data Warehouse Architectures](https://docs.microsoft.com/en-us/azure/architecture/data-guide/relational-data/data-warehousing)
+Microsoft documentation on [Azure Data Warehouse Architectures](https://docs.microsoft.com/en-us/azure/architecture/data-guide/relational-data/data-warehousing)
 
 ## Ingesting Data at scale into Azure Synapse
 
@@ -63,10 +63,10 @@ Ingesting data at scale into Azure Synapse involves:
 
 ## SQL to SQL ELT in Azure
 
-When using Microsoft Azure to implement a data warehouse, the best solution is often to pergorm a SQL to SQL ELT.
+When using Microsoft Azure to implement a data warehouse, the best solution is often to perform a SQL to SQL ELT.
 
 Doing a SQL to SQL ELT in Azure involves:
-- Starting with data ingested into either Blob Storage or Azure Delta Lake Gen 2
+- Starting with data ingested into either Blob Storage or Azure Data Lake Gen 2
 - Create EXTERNAL staging tables in the Data Warehouse
 - Transform data from staging tables to DW tables
 

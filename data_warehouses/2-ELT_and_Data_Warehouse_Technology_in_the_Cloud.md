@@ -9,7 +9,7 @@ Transform and Load (ETL) processes.
 - End-to-end data warehouse solution that provides the ability to manage the various parts of a data warehouse from a 
 single application.
 
-![cloud_dw_tech](./0-images/chap2/cloud_dw_tech.png "cloud_dw_tech")
+<img src="./0-images/chap2/cloud_dw_tech.png" alt="cloud_dw_tech" width="700"/>
 
 ## Table of Contents
 
@@ -95,17 +95,18 @@ In a cloud data warehouse the key components are:
 
 These components are  connected by the cloud data pipeline.
 
-![cloud_data_pipeline](./0-images/chap2/cloud_data_pipeline.png "cloud_data_pipeline")
+<img src="./0-images/chap2/cloud_data_pipeline.png" alt="cloud_data_pipeline" width="700"/>
 
 ### Cloud Managed SQL Storage
 
-![sql_storage](./0-images/chap2/sql_storage.png "sql_storage")
+<img src="./0-images/chap2/sql_storage.png" alt="sql_storage" width="700"/>
 
 
 RDMS are found as:
 - data sources both on-premise and in the cloud
-- in the cloud data warehouse for loading transforming and storing data in the cloud
-Data Warehouses in the cloud leverage many of the same SQL style, relational databases that are used for OLTP systems.
+- in the cloud: data warehouse for loading transforming and storing data in the cloud.
+
+Data Warehouses in the cloud leverage many of the same SQL style, relational databases that are used for OLTP systems:
 - Oracle 
 - Microsoft SQL Server 
 - PostgreSQL 
@@ -127,14 +128,14 @@ the hardware resources to gain optimal performance.
 In an unmanaged database scenario, the responsibilities for the database server and its underlying system encompass:
 - Configuring
 - Monitoring
-- Patching (process of applying updates to the software that runs the database and its underlying operating system. )
+- Patching (process of applying updates to the software that runs the database and its underlying operating system)
 - Maintaining
 
 Conversely, in a fully managed service, the cloud service provider assumes the responsibility for configuring and
 maintaining the underlying system.
 
 ### Cloud Managed NoSQL Storage
-The previous picture is also true for NoSQL databased, which are also fond at each of the steps represented.
+The previous picture is also true for NoSQL databases, which are also found at each of the steps represented.
 
 ELT makes it easier to use many NoSQL database management systems in Data Warehousing scenarios. These database come in 
 many flavors such as:
@@ -172,7 +173,7 @@ as a combination of :
 - integration tools
 - monitoring tools
 
-![cloud_etl_pipeline](./0-images/chap2/cloud_etl_pipeline.png "cloud_etl_pipeline")
+<img src="./0-images/chap2/cloud_etl_pipeline.png" alt="cloud_etl_pipeline" width="700"/>
 
 Major Cloud providers service are:
 - Azure Data Factory 
