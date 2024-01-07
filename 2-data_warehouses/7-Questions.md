@@ -1,8 +1,5 @@
 # Project questions
 
-## General
-- Is azure synapse a datawarehouse?
-This is azure datawarehouse solution
 
 ## Task 1: Create your Azure resources
 - create Postgres Azure Database
