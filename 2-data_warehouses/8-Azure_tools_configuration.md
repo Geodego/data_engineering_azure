@@ -130,8 +130,50 @@ This show how to create linked services to ingest data into Azure Synapse Analyt
 - To add a new linked service, click on the `+` sign on the top of the screen.
 - PostgreSQL:
   - Search for `PostgreSQL` and select `Azure Database for PostgreSQL` (which you've already created) from the 2 possible 
-  options.
-  - In `Account Selection Method` select `From Azure subscription`
+  options. click on `Continue`
+  - keep the default name 
+  - Back to the 'New linked service' screen, in `Account Selection Method` select `From Azure subscription`.
+  - By selecting my subscription in `Azure subscription`, I can find my PostgreSQL server name in `Server name`.
+  - In `Database name` I can select the database I want to connect to.
+  - In `User name` I can input the user which comes from my PostgreSQL resource ('udacity' in our example).
+  - In `Password` I can input the password for `Admin Username` which comes from my PostgreSQL resource.
+  - `Encryption method`: choose `RequestSSL`
+  - Test the connection by clicking on the `Test connection` button
+  - click on `Create`
+- Azure Blob Storage:
+  - select `Azure Blob Storage` from the list of options and click on `Continue`
+  - keep the default name
+  - In `Account Selection Method` select `From Azure subscription`.
+  - In `Storage account name` select the storage account you want to connect to. In our case it is 'udacitydemoc2'.
+  - test the connection by clicking on the `Test connection` button
+  - click on `Create`
+
+## Ingesting Data into Blob Storage
+Now that we have created our linked services, we have a link to Azure Blob Storage and a link to Azure PostgreSQL. We
+want to ingest data from PostgresSQL into Blob Storage. To do this we can use a shortcut in the home screen.
+- In the home screen, select `Ingest`. This is to perform a onetime or scheduled data load.
+- Select `Run once now` and click on `Next`
+- in `Source type`: 
+  - select `Azure Database for PostgreSQL`
+  - in `Connection` select the PostgreSQL linked service we created earlier
+  - Select the tables you want to ingest
+  - click on `Next` and preview the data
+  - close the preview and click on `Next`
+- in `Target type`, select `Azure Blob Storage`
+  - in `Connection` select the Blob Storage linked service we created earlier
+  - in `Folder path` select the folder where you want to store the data. In our case 'udacitydemo2'.
+  - add a file name e.g. 'publicpaymentimport.csv' and click on `Next`
+  - That brings you to `File format settings`. Here you can configure the format of the file you want to create.
+    - We want to create a CSV file. So select `Delimited text` in `Format type`
+    - in `Column delimiter` select `Comma`
+    - in `Row delimiter` select `Default(\r\n)`
+    - click on `Next`
+- in `Settings`, leave the default name and click on `Next`
+- Review the settings and click on `Next` to run the deployment
+- click on `Finish`
+- Back to the home screen, select `Data` from the left hand menu.
+- Here you see your linked services and you should have data in your blob storage.
+
 
   
     
