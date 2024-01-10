@@ -174,6 +174,54 @@ want to ingest data from PostgresSQL into Blob Storage. To do this we can use a 
 - Back to the home screen, select `Data` from the left hand menu.
 - Here you see your linked services and you should have data in your blob storage.
 
+## Creating Staging Tables using Azure Synapse
+
+You can create staging tables using Azure Synapse Analytics. These tables are external tables that represent the load 
+stage of an ELT process. In this example we use a dedicated SQL pool in Synapse studio. In the project we'll use the 
+default built-in serverless SQL pool.
+- From the left-hand navigation menu, select the `Manage` tab, to see the resources we have available:
+  - Select `SQL pools`: 
+    - there's a Built-in SQL pool and a Dedicated SQL pool. We will use the Dedicated SQL pool.
+    - Check if the dedicated SQL pool is running. If not, click on `Start` to start it.
+  - Select `Linked services`:
+      - Here you see the 2 linked services we created earlier when we ingested data.
+      - There is also an Azure Synapse Analytics and Azure Data Lake Storage Gen2 linked service that were created when the
+    Synapse Analytics workspace was created.
+- From Azure Synapse left hand menu, select `Data`: 
+  - Select the `Workspace` tab. We can see our SQL database in which we have tables and external tables.
+  Our staging data is going to go to the external tables.
+  - Select the `Linked` tab. Here we can see the Azure Blob Storage we created previously. In the `Azure Data Lake Storage Gen2`
+  we notice that the Blob Storage container name automatically shows up in our Data Lake. 
+  - Within the container we see the CSV file that we created previously. In order to create our external table from this
+    CSV file, we'll use the `New SQL script` button at the top of the screen. Hitting the dropdown, we have three options.
+    We choose `Create external table`.
+  - This brings us to a wizard which determines from the file its format. We check that this is a CSV file and accept
+  all the defaults. We click on `Continue`.
+  - In the next step I need to select the target database. In `Select SQL pool` I select the dedicated SQL pool (udacitydemo2).
+  I can also select the database. We call the external table `staging_payment`.
+  - Next, I can choose to create the external table automatically or I can use a SQL script. We choose to use a SQL script.
+    - click on `Open script` button. Azure automatically generates the SQL script to create the external table. Looking at
+      the script:
+      - In the first step it's creating an external file format.
+      - Next it's creating an external data source. This is the location of our Azure blob storage.
+      - Next it's creating an external table:
+        - 'LOCATION' is our csv file 'publicpaymentimport.csv'.
+        - 'DATA_SOURCE' is the external data source we just created.
+        - 'FILE_FORMAT' is the external file format we just created.
+        - The column names are 'C1', 'C2',... that's because the csv file did not have column names. We should replace
+        these names with the meaningful column names.
+        - If we run the script as such we get an Hadoop error. That's because in the csv file the DateTime is represented 
+        as a varchar. We need to import the data into the external table as a varchar(50).
+  - We can check that the external table has been created by going to the `Workspace` tab and in `SQL databases` select
+  `External tables` in our database. If you need to run this script again you need to drop this table first:
+    - Select the 3 dots near the table and select `New SQL script` and `DROP`. You can simply run the script and it will
+    drop the table.
+
+**Note**: The serverless SQL pool won't allow you to create persistent tables in the database, as it has no local 
+storage. So, use `CREATE EXTERNAL TABLE AS SELECT` (CETAS) instead. CETAS is a parallel operation that creates external 
+table metadata and exports the SELECT query results to a set of files in your storage account. Therefore, use an 
+external table or a T-SQL view to create SQL tables in Synapse Built-in Serverless SQL pool.
+
 
   
     
