@@ -1,5 +1,37 @@
 # Implementing Data Warehouses in Azure
 
+## Table of Contents
+
+1. [**Azure Data Warehousing Pricing**](#azure-data-warehousing-pricing)
+   - [Batch Data Ingestion](#batch-data-ingestion)
+   - [Streaming Data Ingestion](#streaming-data-ingestion)
+   - [SQL Data Storage](#sql-data-storage)
+   - [NoSQL Data Storage](#nosql-data-storage)
+   - [Big Data Analytics](#big-data-analytics)
+   - [Log and Telemetry Streaming Analytics](#log-and-telemetry-streaming-analytics)
+   - [Benefits of the Mix and Match Approach](#benefits-of-the-mix-and-match-approach)
+   - [Cautions for the Mix and Match Approach](#cautions-for-the-mix-and-match-approach)
+
+2. [**Azure Data Warehouse Architectures**](#azure-data-warehouse-architectures)
+   - [Enterprise BI Architecture](#enterprise-bi-architecture)
+   - [Automated Enterprise BI Architecture](#automated-enterprise-bi-architecture)
+   - [Additional Resource on Azure Data Warehouse Architectures](#additional-resource-on-azure-data-warehouse-architectures)
+
+3. [**Ingesting Data at Scale into Azure Synapse**](#ingesting-data-at-scale-into-azure-synapse)
+   - [Creating Linked Services](#creating-linked-services)
+   - [Creating a Pipeline](#creating-a-pipeline)
+   - [Using a Trigger or a One-Time Data Ingestion](#using-a-trigger-or-a-one-time-data-ingestion)
+   - [Additional Resources for Ingesting Data into Azure Synapse](#additional-resources-for-ingesting-data-into-azure-synapse)
+
+4. [**SQL to SQL ELT in Azure**](#sql-to-sql-elt-in-azure)
+   - [Process Overview](#process-overview)
+   - [Staging Tables](#staging-tables)
+   - [Dedicated or Serverless SQL Pools](#dedicated-or-serverless-sql-pools)
+     - [Azure Dedicated SQL Pools](#azure-dedicated-sql-pools)
+     - [Azure Synapse Analytics Serverless SQL Pools](#azure-synapse-analytics-serverless-sql-pools)
+   - [Additional Resource on SQL to SQL ELT in Azure](#additional-resource-on-sql-to-sql-elt-in-azure)
+
+
 ## Azure Data Warehousing Pricing
 
 Creating data warehouses using Microsoft Azure technologies requires an understanding of the purpose of each component. 
