@@ -8,19 +8,19 @@
 
 ## Task 3
 -  host, username, and password information for your PostgresSQL database:
-  - Local database:
-    - host: localhost
-    - Port: The default PostgreSQL port is 5432.
-    - username: your PostgreSQL username.
-    - password: The password for the above username.
-    - database: The name of the database you want to connect to.
-  - Azure Database:
-    - host: Enter the host name of your Azure PostgreSQL database. You can find this in your Azure portal under the 
-    properties of your PostgreSQL server. It typically follows the format <your-database-name>.postgres.database.azure.com.
-    - Port: The default PostgreSQL port is 5432.
-    - user: Your username followed by @<your-database-name>, which is the format Azure uses for PostgreSQL database usernames.
-    - Password: The password you set for the PostgreSQL database in Azure.
-    - SSL: Azure PostgreSQL requires SSL for connections. You might need to enable SSL in your connection settings and 
+   - Local database:
+     - host: localhost
+     - Port: The default PostgreSQL port is 5432. 
+     - username: your PostgreSQL username. 
+     - password: The password for the above username. 
+     - database: The name of the database you want to connect to.
+   - Azure Database:
+     - host: Enter the host name of your Azure PostgreSQL database. You can find this in your Azure portal under the 
+      properties of your PostgreSQL server. It typically follows the format <your-database-name>.postgres.database.azure.com.
+     - Port: The default PostgreSQL port is 5432.
+     - user: Your username followed by @<your-database-name>, which is the format Azure uses for PostgreSQL database usernames.
+     - Password: The password you set for the PostgreSQL database in Azure.
+     - SSL: Azure PostgreSQL requires SSL for connections. You might need to enable SSL in your connection settings and 
     possibly specify a path to the SSL certificate.
 
 ### for dbbeaver:

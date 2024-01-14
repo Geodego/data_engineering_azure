@@ -1,1 +1,5 @@
 /data_warehouses/6-project/data/
+/2-data_warehouses/6-project/data/
+# all files in .idea folder
+/.idea/*
+

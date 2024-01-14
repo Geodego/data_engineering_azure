@@ -14,7 +14,7 @@ def convert_png_to_pdf(png_file, pdf_file):
 
 
 # Usage
-png_file = '/home/geoffroy/Projects/data_engineering_azure/2-data_warehouses/0-images/chap6/star duration.png'
-pdf_file = '/home/geoffroy/Projects/data_engineering_azure/6-project/star duration.pdf'
+png_file = '../2-data_warehouses/0-images/chap6/star_schema.png'
+pdf_file = '../2-data_warehouses/6-project/star_schema.pdf'
 
 convert_png_to_pdf(png_file, pdf_file)

@@ -1,0 +1,58 @@
+// Use DBML to define your database structure
+// Docs: https://dbml.dbdiagram.io/docs
+
+Table Fact_Trip {
+  trip_id varchar [primary key]
+  start_station_id varchar
+  end_station_id varchar
+  rider_id integer
+  duration integer
+  rider_age integer
+  started_at datetime
+  ended_at datetime
+  day integer
+  starting_hour integer
+}
+
+Table Fact_Payments {
+rider_id integer
+payment_date integer
+payment_amount decimal
+}
+
+Table Dim_Rider {
+  rider_id integer [primary key]
+  adress varchar
+  first varchar
+  last varchar
+  birthday varchar
+  member bool
+  age_at_account_start integer
+}
+
+Table Dim_Station {
+  station_id varchar
+  name varchar
+  latitude float
+  longitude float
+}
+
+Table Dim_Date {
+  date integer [primary key]
+  week_day integer
+  month integer
+  quarter integer
+}
+
+Ref: Dim_Rider.rider_id < Fact_Trip.rider_id // many-to-one
+
+Ref: Dim_Station.station_id < Fact_Trip.start_station_id
+
+Ref: Dim_Station.station_id < Fact_Trip.end_station_id
+
+Ref: Dim_Date.date < Fact_Trip.day
+
+Ref: Dim_Rider.rider_id < Fact_Payments.rider_id
+
+Ref: Dim_Date.date < Fact_Payments.payment_date
+
