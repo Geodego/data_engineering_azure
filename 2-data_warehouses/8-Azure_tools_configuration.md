@@ -4,6 +4,23 @@ This document describes how to configure some of the tools used in Azure data wa
 
 ## Table of Contents
 
+1. [Azure Synapse](#azure-synapse)
+   - [Create a Synapse Workspace](#create-a-synapse-workspace)
+     - [Basics](#basics)
+     - [Security](#security)
+     - [Networking](#networking)
+     - [Tags](#tags)
+     - [Review + Create](#review--create)
+   - [Azure Synapse Workspace Tour](#azure-synapse-workspace-tour)
+2. [Azure SQL Database](#azure-sql-database)
+3. [Azure Blob Storage](#azure-blob-storage)
+4. [Azure PostgreSQL Database](#azure-postgresql-database)
+5. [Ingesting Data into Azure Synapse Analytics Workspace](#ingesting-data-into-azure-synapse-analytics-workspace)
+6. [Ingesting Data into Blob Storage](#ingesting-data-into-blob-storage)
+7. [Creating Staging Tables using Azure Synapse](#creating-staging-tables-using-azure-synapse)
+
+
+
 
 ## Azure Synapse
 

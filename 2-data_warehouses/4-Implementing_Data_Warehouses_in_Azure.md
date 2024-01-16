@@ -186,8 +186,8 @@ provisioning or resource allocation.
 - Use Serverless SQL pools if you are using the Udacity Azure Cloud Lab.
 
 The steps for data processing using serverless SQL pools are:
-- **Extract and Load**: The process starts similarly, with data being extracted and initially loaded into a format 
-accessible by Azure Synapse. External tables are used to access and query this data.
+- **Extract and Load**: The process starts similarly as in dedicated SQL pools, with data being extracted and initially 
+loaded into a format accessible by Azure Synapse. External tables are used to access and query this data.
 
 - **Transformation**: Transformations are performed using Serverless SQL pool queries. The transformations can include 
 similar operations as in the dedicated pool scenario.
@@ -206,11 +206,11 @@ storage like Azure Blob Storage or Azure Data Lake.
 
 - **Resource Management and Scalability**: Dedicated SQL pools require management of compute and storage resources, 
 including scaling based on workload. Serverless SQL pools, on the other hand, are inherently scalable and require no 
-- upfront provisioning, with costs based on the amount of data processed.
+upfront provisioning, with costs based on the amount of data processed.
 
 - **Use Case Suitability**: Dedicated SQL pools are ideal for large-scale, regular analytics where performance and 
 resource availability are critical. Serverless SQL pools are more suited for ad-hoc querying, exploratory analysis, and 
-- scenarios where workload is intermittent or unpredictable.
+scenarios where workload is intermittent or unpredictable.
 
 ### Additional Resource
 [SQL to SQL ELT in Azure](https://docs.microsoft.com/en-us/azure/architecture/data-guide/relational-data/etl)

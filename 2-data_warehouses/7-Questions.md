@@ -45,18 +45,12 @@
 - You may need to download and specify an SSL certificate from Azure.
 
 ## Task 4
-- How to use the ingest wizard
+- [How to use the ingest wizard](https://github.com/Geodego/data_engineering_azure/blob/master/2-data_warehouses/8-Azure_tools_configuration.md#ingesting-data-into-azure-synapse-analytics-workspace)
 
 ## Task 5
-- Why, when using the external table wizard, we need to modify the script to put dates into a varchar field in staging
-- What is the  script-generating function of the serverless SQL Pool used to load data from blob storage into external
-staging tables in the data warehouse?
-- what is the purpose of the external staging tables in the data warehouse
-- where are saved the external staging tables?
-- What are external tables? 
-An external table points to data located in Hadoop, Azure Storage blob, or Azure Data Lake Storage. You can use external 
-tables to read data from files or write data to files in Azure Storage.
-[external tables documentation](https://learn.microsoft.com/en-us/azure/synapse-analytics/sql/develop-tables-external-tables?tabs=hadoop)
+- put dates into a varchar field 
+- prepare script in advance to be able to rename columns
+
 
 ## Task 6
 - is it the serverless SQL pool that is used for the TRANSFORM step?
