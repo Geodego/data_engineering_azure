@@ -1,0 +1,12 @@
+CREATE EXTERNAL TABLE dbo.Payment (
+	[payment_id] int,
+	[date] nvarchar(4000),
+	[amount] decimal,
+	[account_number] int,
+	)
+	WITH (
+	LOCATION = 'public.payment',
+	DATA_SOURCE = [? Todefine],
+	FILE_FORMAT = [SynapseDelimitedTextFormat]
+	)
+GO

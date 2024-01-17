@@ -1,0 +1,15 @@
+CREATE EXTERNAL TABLE dbo.Trip (
+	[trip_id] nvarchar(4000),
+	[rideable_type] nvarchar(4000),
+	[started_at] nvarchar(4000),
+	[ended_at] nvarchar(4000),
+	[start_station_id] int,
+	[end_station_id] int,
+	[member_id] int
+	)
+	WITH (
+	LOCATION = 'public.trip',
+	DATA_SOURCE = [? Todefine],
+	FILE_FORMAT = [SynapseDelimitedTextFormat]
+	)
+GO

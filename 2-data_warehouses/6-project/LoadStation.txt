@@ -1,0 +1,12 @@
+CREATE EXTERNAL TABLE dbo.Station (
+	[station_id] nvarchar(4000),
+	[name] nvarchar(4000),
+	[latitude] float,
+	[longitude] float
+	)
+	WITH (
+	LOCATION = 'public.station',
+	DATA_SOURCE = [? Todefine],
+	FILE_FORMAT = [SynapseDelimitedTextFormat]
+	)
+GO
