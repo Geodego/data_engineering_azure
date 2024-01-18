@@ -1,0 +1,19 @@
+-- Use CETAS to export select statement
+If OBJECT_ID('dbo.fact_payments') IS NOT NULL
+BEGIN
+	DROP TABLE dbo.fact_payments;
+END
+
+CREATE EXTERNAL TABLE dbo.fact_payments
+WITH
+(
+	LOCATION = '/data/fact_payments',
+	DATA_SOURCE = [To specify],
+	FILE_FORMAT = [SynapseDelimitedTextFileFormat]
+)
+AS
+SELECT [dbo].[Payment].amount AS amount,
+       [dbo].[Rider].rider_id AS rider_id
+FROM [dbo].[Payment]
+JOIN [dbo].[Rider] ON [dbo].[Payment].account_number = [dbo].[Rider].account_number
+```
