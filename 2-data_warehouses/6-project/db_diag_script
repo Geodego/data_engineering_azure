@@ -6,17 +6,18 @@ Table Fact_Trip {
   start_station_id varchar
   end_station_id varchar
   rider_id integer
-  duration integer
+  duration_in_minutes integer
   rider_age integer
   started_at datetime
   ended_at datetime
-  day integer
+  date_key integer
   starting_hour integer
 }
 
 Table Fact_Payments {
 rider_id integer
-payment_date integer
+payment_date datetime
+date_key int
 payment_amount decimal
 }
 
@@ -38,7 +39,7 @@ Table Dim_Station {
 }
 
 Table Dim_Date {
-  date integer [primary key]
+  date_key integer [primary key]
   week_day integer
   month integer
   quarter integer
@@ -50,9 +51,9 @@ Ref: Dim_Station.station_id < Fact_Trip.start_station_id
 
 Ref: Dim_Station.station_id < Fact_Trip.end_station_id
 
-Ref: Dim_Date.date < Fact_Trip.day
+Ref: Dim_Date.date_key < Fact_Trip.date_key
 
 Ref: Dim_Rider.rider_id < Fact_Payments.rider_id
 
-Ref: Dim_Date.date < Fact_Payments.payment_date
+Ref: Dim_Date.date_key < Fact_Payments.date_key
 
