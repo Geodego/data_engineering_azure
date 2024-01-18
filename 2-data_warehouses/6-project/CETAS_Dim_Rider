@@ -1,0 +1,19 @@
+-- Make sure to replace 'your_data_source'
+-- with the actual names of your data source
+-- Use CETAS to export select statement
+IF OBJECT_ID('dbo.Dim_Rider') IS NOT NULL
+BEGIN
+  DROP EXTERNAL TABLE [dbo].[Dim_Rider];
+END
+
+CREATE EXTERNAL TABLE dbo.dim_rider
+WITH (
+    LOCATION    = 'fact_bike_trips',
+    DATA_SOURCE = 'your_data_source',
+	FILE_FORMAT = 'SynapseDelimitedTextFormat'
+)
+AS
+SELECT rider_id, adress, first, last, birthday, member,
+DATEDIFF(year, birthday, account_start_date) AS age_at_account_start,
+
+FROM [dbo].[Rider]

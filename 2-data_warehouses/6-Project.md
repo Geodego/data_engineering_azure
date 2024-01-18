@@ -109,6 +109,7 @@ metadata and exports the SELECT query results to a set of files in your storage 
 
 **Tip**: For creating fact tables out of join between dimensions and staging tables, you can use CETAS to materialize 
 joined reference tables to a new file and then join to this single external table in subsequent queries.
+
 <img src="./0-images/chap6/cetas.png" alt="CETAS" width="700"/>
 
 Create a new SQL script, and ensure you are connected to the serverless SQL pool and your SQL database.

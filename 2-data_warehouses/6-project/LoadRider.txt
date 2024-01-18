@@ -4,7 +4,9 @@ CREATE EXTERNAL TABLE dbo.Rider (
 	[first] nvarchar(4000),
 	[last] nvarchar(4000),
 	[birthday] nvarchar(4000),
-	[account_number] int
+	[account_start_date] nvarchar(4000),
+	[account_end_date] nvarchar(4000),
+	[member] bool
 	)
 	WITH (
 	LOCATION = 'public.rider',

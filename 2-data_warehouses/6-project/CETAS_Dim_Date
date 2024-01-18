@@ -1,0 +1,24 @@
+-- Make sure to replace 'your_data_source'
+-- with the actual names of your data source
+
+WITH DateSeries AS (
+    SELECT CAST('2020-01-01' AS DATE) AS DateValue
+    UNION ALL
+    SELECT DATEADD(DAY, 1, DateValue)
+    FROM DateSeries
+    WHERE DateValue < '2024-12-31'
+)
+CREATE EXTERNAL TABLE dbo.Dim_Date
+WITH (
+    LOCATION = 'fact_bike_trips',
+    DATA_SOURCE = 'your_data_source',
+    FILE_FORMAT = 'SynapseDelimitedTextFormat'
+)
+AS
+SELECT
+    CAST(REPLACE(CONVERT(VARCHAR(10), DateValue, 112), '-', '') AS INT) AS date_key,
+    DATEPART(WEEKDAY, DateValue) AS week_day,
+    DATEPART(MONTH, DateValue) AS month,
+    DATEPART(QUARTER, DateValue) AS quarter
+FROM DateSeries
+OPTION (MAXRECURSION 0); -- This allows for an unlimited number of recursions
