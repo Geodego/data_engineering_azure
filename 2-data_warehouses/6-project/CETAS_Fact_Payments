@@ -1,19 +1,20 @@
--- Use CETAS to export select statement
-If OBJECT_ID('dbo.fact_payments') IS NOT NULL
+IF OBJECT_ID('dbo.fact_payments') IS NOT NULL
 BEGIN
-	DROP TABLE dbo.fact_payments;
+    DROP EXTERNAL TABLE [dbo].[fact_payments];
 END
+GO
 
 CREATE EXTERNAL TABLE dbo.fact_payments
-WITH
-(
-	LOCATION = '/data/fact_payments',
-	DATA_SOURCE = [To specify],
-	FILE_FORMAT = [SynapseDelimitedTextFileFormat]
+WITH (
+	LOCATION    = 'fact_payments',
+	DATA_SOURCE = [data_uproject2_dfs_core_windows_net],
+	FILE_FORMAT = [SynapseDelimitedTextFormatWithHeader]
 )
 AS
-SELECT [dbo].[Payment].amount AS amount,
-       [dbo].[Rider].rider_id AS rider_id
-FROM [dbo].[Payment]
-JOIN [dbo].[Rider] ON [dbo].[Payment].account_number = [dbo].[Rider].account_number
-```
+SELECT rs.rider_id,
+       CONVERT(DATETIME, LEFT(ps.[date], 23)) AS payment_date,
+	   CAST(REPLACE(LEFT(ps.date, 10), '-', '') AS INT) AS date_key,
+	   ps.amount as payment_amount
+FROM [dbo].[payment_stage] ps
+INNER JOIN [dbo].[rider_stage] rs ON ps.rider_id = rs.rider_id;
+GO

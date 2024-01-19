@@ -1,16 +1,41 @@
-CREATE EXTERNAL TABLE dbo.Rider (
+-- First, create a file format if you don't already have one that skips the header row
+CREATE EXTERNAL FILE FORMAT [SynapseDelimitedTextFormatWithHeader]
+WITH (
+    FORMAT_TYPE = DELIMITEDTEXT,
+    FORMAT_OPTIONS (FIELD_TERMINATOR = ',', STRING_DELIMITER = '"', FIRST_ROW = 2)
+);
+GO
+
+IF NOT EXISTS (SELECT * FROM sys.external_data_sources WHERE name = 'data_uproject2_dfs_core_windows_net')
+	CREATE EXTERNAL DATA SOURCE [data_uproject2_dfs_core_windows_net]
+	WITH (
+		LOCATION = 'abfss://data@uproject2.dfs.core.windows.net'
+	)
+GO
+
+IF OBJECT_ID('dbo.rider_stage') IS NOT NULL
+BEGIN
+    DROP EXTERNAL TABLE [dbo].[rider_stage];
+END
+GO
+
+CREATE EXTERNAL TABLE [dbo].[rider_stage] (
 	[rider_id] int,
-	[address] nvarchar(4000),
-	[first] nvarchar(4000),
-	[last] nvarchar(4000),
-	[birthday] nvarchar(4000),
-	[account_start_date] nvarchar(4000),
-	[account_end_date] nvarchar(4000),
-	[member] bool
+	[first] nvarchar(50),
+	[last] nvarchar(50),
+	[address] nvarchar(100),
+	[birthday] nvarchar(50),
+	[account_start_date] nvarchar(50),
+	[account_end_date] nvarchar(50),
+	[is_member] nvarchar(25)
 	)
 	WITH (
-	LOCATION = 'public.rider',
-	DATA_SOURCE = [? Todefine],
-	FILE_FORMAT = [SynapseDelimitedTextFormat]
+	LOCATION = 'publicrider.txt',
+	DATA_SOURCE = [data_uproject2_dfs_core_windows_net],
+	FILE_FORMAT = [SynapseDelimitedTextFormatWithHeader]
 	)
+GO
+
+
+SELECT TOP 100 * FROM [dbo].[rider_stage]
 GO

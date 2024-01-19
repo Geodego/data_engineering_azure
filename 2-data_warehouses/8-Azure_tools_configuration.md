@@ -136,7 +136,7 @@ Ingest, Explore and analyze, Visualize.
     - `Admin Username`: e.g. 'udacity'
     - `Password`: define a password for the admin user
 - `Networking`:
-  - 'Firewall rules': select `Allow public access from anay Azure service within Azure to this server`
+  - 'Firewall rules': select `Allow public access from any Azure service within Azure to this server`
 - We can leave the rest of the settings as default and go directly to the tab `Review + create`
 - Click on `Create`
 

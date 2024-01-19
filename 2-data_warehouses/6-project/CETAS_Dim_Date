@@ -1,24 +1,30 @@
--- Make sure to replace 'your_data_source'
--- with the actual names of your data source
+IF OBJECT_ID('dbo.dim_date') IS NOT NULL
+BEGIN
+    DROP EXTERNAL TABLE [dbo].[dim_date];
+END
+GO
 
-WITH DateSeries AS (
-    SELECT CAST('2020-01-01' AS DATE) AS DateValue
-    UNION ALL
-    SELECT DATEADD(DAY, 1, DateValue)
-    FROM DateSeries
-    WHERE DateValue < '2024-12-31'
-)
-CREATE EXTERNAL TABLE dbo.Dim_Date
+CREATE EXTERNAL TABLE dbo.dim_date
 WITH (
-    LOCATION = 'fact_bike_trips',
-    DATA_SOURCE = 'your_data_source',
-    FILE_FORMAT = 'SynapseDelimitedTextFormat'
+	LOCATION    = 'dim_date',
+	DATA_SOURCE = [data_uproject2_dfs_core_windows_net],
+	FILE_FORMAT = [SynapseDelimitedTextFormatWithHeader]
 )
 AS
-SELECT
-    CAST(REPLACE(CONVERT(VARCHAR(10), DateValue, 112), '-', '') AS INT) AS date_key,
-    DATEPART(WEEKDAY, DateValue) AS week_day,
-    DATEPART(MONTH, DateValue) AS month,
-    DATEPART(QUARTER, DateValue) AS quarter
-FROM DateSeries
-OPTION (MAXRECURSION 0); -- This allows for an unlimited number of recursions
+SELECT DISTINCT
+    CAST(REPLACE(LEFT(start_at, 10), '-', '') AS INT) AS date_key,
+    DATEPART(WEEKDAY, CONVERT(DATETIME, LEFT([start_at], 23))) AS week_day,
+	DATEPART(MONTH, CONVERT(DATETIME, LEFT([start_at], 23))) AS month,
+    DATEPART(QUARTER, CONVERT(DATETIME, LEFT([start_at], 23))) AS quarter
+FROM [dbo].[trip_stage]
+UNION
+SELECT DISTINCT
+    CAST(REPLACE(LEFT([date], 10), '-', '') AS INT) AS date_key,
+    DATEPART(WEEKDAY, CONVERT(DATETIME, LEFT([date], 23))) AS week_day,
+	DATEPART(MONTH, CONVERT(DATETIME, LEFT([date], 23))) AS month,
+    DATEPART(QUARTER, CONVERT(DATETIME, LEFT([date], 23))) AS quarter
+FROM [dbo].[payment_stage];
+GO
+
+SELECT TOP 100 * FROM dbo.dim_date
+GO

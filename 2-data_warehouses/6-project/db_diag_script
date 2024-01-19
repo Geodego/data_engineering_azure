@@ -26,8 +26,8 @@ Table Dim_Rider {
   adress varchar
   first varchar
   last varchar
-  birthday varchar
-  member bool
+  birthday datetime
+  is_member bool
   age_at_account_start integer
 }
 
@@ -56,4 +56,6 @@ Ref: Dim_Date.date_key < Fact_Trip.date_key
 Ref: Dim_Rider.rider_id < Fact_Payments.rider_id
 
 Ref: Dim_Date.date_key < Fact_Payments.date_key
+
+
 

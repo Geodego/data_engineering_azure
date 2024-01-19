@@ -1,15 +1,25 @@
-CREATE EXTERNAL TABLE dbo.Trip (
+IF OBJECT_ID('dbo.trip_stage') IS NOT NULL
+BEGIN
+    DROP EXTERNAL TABLE [dbo].[trip_stage];
+END
+GO
+
+CREATE EXTERNAL TABLE [dbo].[trip_stage] (
 	[trip_id] nvarchar(4000),
 	[rideable_type] nvarchar(4000),
-	[started_at] nvarchar(4000),
+	[start_at] nvarchar(4000),
 	[ended_at] nvarchar(4000),
-	[start_station_id] int,
-	[end_station_id] int,
-	[member_id] int
+	[start_station_id] nvarchar(4000),
+	[end_station_id] nvarchar(4000),
+	[rider_id] int
 	)
 	WITH (
-	LOCATION = 'public.trip',
-	DATA_SOURCE = [? Todefine],
-	FILE_FORMAT = [SynapseDelimitedTextFormat]
+	LOCATION = 'publictrip.txt',
+	DATA_SOURCE = [data_uproject2_dfs_core_windows_net],
+	FILE_FORMAT = [SynapseDelimitedTextFormatWithHeader]
 	)
+GO
+
+
+SELECT TOP 100 * FROM [dbo].[trip_stage]
 GO

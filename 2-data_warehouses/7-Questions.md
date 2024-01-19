@@ -61,3 +61,7 @@ these Azure tools or it is specific to the Udacity workspace constraints.
 - explain: Tip: For creating fact tables out of join between dimensions and staging tables, you can use CETAS to 
 materialize joined reference tables to a new file and then join to this single external table in subsequent queries.
 - Read the 3 docs in Reference for SQL serverless pool.
+
+## notes
+synapse: from home select in resources your synapse resource
+in Getting started click 'Open Synapse studio'

@@ -1,0 +1,17 @@
+username:
+password:
+
+postgres:
+	udacitydemo2
+	admin udacity, password:
+
+	the script creates database: udacityproject
+
+synapse:
+	udacitydemo3
+	storage account: uproject2
+	file system name: data
+	admin login: sqladminuser password:
+
+
+staging database: bike_staging

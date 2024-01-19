@@ -1,12 +1,22 @@
-CREATE EXTERNAL TABLE dbo.Payment (
+IF OBJECT_ID('dbo.payment_stage') IS NOT NULL
+BEGIN
+    DROP EXTERNAL TABLE [dbo].[payment_stage];
+END
+GO
+
+CREATE EXTERNAL TABLE [dbo].[payment_stage] (
 	[payment_id] int,
-	[date] nvarchar(4000),
-	[amount] decimal,
-	[account_number] int,
+	[date] nvarchar(50),
+	[amount] decimal(10,2),
+	[rider_id] int
 	)
 	WITH (
-	LOCATION = 'public.payment',
-	DATA_SOURCE = [? Todefine],
-	FILE_FORMAT = [SynapseDelimitedTextFormat]
+	LOCATION = 'publicpayment.txt',
+	DATA_SOURCE = [data_uproject2_dfs_core_windows_net],
+	FILE_FORMAT = [SynapseDelimitedTextFormatWithHeader]
 	)
+GO
+
+
+SELECT TOP 100 * FROM [dbo].[payment_stage]
 GO
