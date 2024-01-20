@@ -8,7 +8,7 @@ host = "udacitydemo2.postgres.database.azure.com"
 user = "udacity"
 password = "fill password"
 
-print('Attempting to connect ...')
+print('Attempting to connect ...')/home/geoffroy/Projects/cutter
 # Create a new DB
 sslmode = "require"
 dbname = "postgres"
