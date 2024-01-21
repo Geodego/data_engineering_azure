@@ -7,7 +7,7 @@
 3. [Azure Data Warehouse Technology](https://github.com/Geodego/data_engineering_azure/blob/master/2-data_warehouses/3-Azure_Data_Warehouse_Technology.md)
 4. [Implementing Data Warehouses in Azure](https://github.com/Geodego/data_engineering_azure/blob/master/2-data_warehouses/4-Implementing_Data_Warehouses_in_Azure.md)
 5. [Useful SQL Requests](https://github.com/Geodego/data_engineering_azure/blob/master/2-data_warehouses/5-Useful_SQL_Requests.md)
-6. [Azure tools configuration](2-data_warehouses/6-Azure_tools_configuration.md)
-7. [Project](https://github.com/Geodego/data_engineering_azure/blob/master/data_warehouses/6-Project.md)
+6. [Azure tools configuration](https://github.com/Geodego/data_engineering_azure/blob/master/2-data_warehouses/6-Azure_tools_configuration.md)
+7. [Project](https://github.com/Geodego/data_engineering_azure/blob/master/2-data_warehouses/7-Project.md)
 
 
