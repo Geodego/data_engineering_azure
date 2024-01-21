@@ -140,6 +140,18 @@ Ingest, Explore and analyze, Visualize.
 - We can leave the rest of the settings as default and go directly to the tab `Review + create`
 - Click on `Create`
 
+### Connecting to Azure PostgreSQL Database
+- In Azure portal autorize the IP address of your computer to access the Azure PostgreSQL database:
+  - In the Azure portal, navigate to your Azure Database for PostgreSQL server.
+  - Select Connection security.
+  - Select Add client IP.
+  - Select Save.
+- host: Enter the host name of your Azure PostgreSQL database. You can find this in your Azure portal under the 
+      properties of your PostgreSQL server. It typically follows the format <your-database-name>.postgres.database.azure.com.
+- Port: The default PostgreSQL port is 5432.
+- user: Your username followed by @<your-database-name>, which is the format Azure uses for PostgreSQL database usernames.
+- Password: The password you set for the PostgreSQL database in Azure.
+
 ## Ingesting data into Azure Synapse Analytics Workspace
 This show how to create linked services to ingest data into Azure Synapse Analytics Workspace. 
 - Withing the workspace use the left hand menu to navigate to the `Manage` tab. 
