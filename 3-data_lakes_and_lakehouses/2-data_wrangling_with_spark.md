@@ -66,6 +66,8 @@ doesn't cause any side effects, then you have a smooth and clean operation.
 If you write functions that **preserve their inputs** and **avoid side effects**, these are called **pure functions**, 
 and your spark code will work well at the scale of big data.
 
+## Spark
+
 ### Spark DAGs
 Every Spark function makes a copy of its input data and never changes the original parent data. Because Spark doesn't 
 change or mutate the input data, it's known as **immutable**. This makes sense when you have a single function. But what 
@@ -183,3 +185,70 @@ AnalysisException: u'Path does not exist:
 file:/home/ubuntu/test.csv;'
 ```
 Loading the file should work if all the nodes have it saved under the same path.
+
+## Imperative vs Declarative programming
+
+We will cover two different ways to manipulate our data:
+- Imperative programming using DataFrames and Python. Imperative programming is concerned with the How:
+  - e.g. Let's get in the car, drive two miles down the road to my favorite bakery, go into the shop, select the 
+  cake from the counter, purchase the cake, and then drive home.
+  - Focus on the exact steps, how we get to the result 
+  - Data transformations with DataFrames
+- Declarative programming using SQL. Cares about the What:
+  - Let's get the cake for Julia. 
+  - concerned about the result we want to achieve 
+  - abstraction layer of an imperative system
+  
+If you have used pandas DataFrames before, you are probably familiar with how to manipulate DataFrames 
+programmatically. We can chain methods such as filter and group by one after another, transforming the 
+DataFrame further and further. In the next few videos, we will dive into how to do data transformations with 
+DataFrames and imperative programming.
+
+### Data Wrangling with Data Frames
+
+In the `3-data_wrangling.ipynb` notebook, using the same music streaming service log dataset, let's do some data 
+wrangling using DataFrames:
+- Print the schema, so we can see the columns we have in the DataFrame
+- Call `describe` on the whole frame to see the values of each column
+- Check how many rows we have in the data frame with the `count` method
+- Use `dropDuplicates` to see each kind once
+- Filter out all the rows that have an empty string value as the user ID.
+- Use a window function to compute cumulative sums
+
+#### General functions
+
+- `select()`: returns a new DataFrame with the selected columns
+- `filter()`: filters rows using the given condition
+- `where()`: is just an alias for filter()
+- `groupBy()`: groups the DataFrame using the specified columns, so we can run aggregation on them
+- `sort()`: returns a new DataFrame sorted by the specified column(s). By default the second parameter 'ascending' is 
+True.
+- `dropDuplicates()`: returns a new DataFrame with unique rows based on all or just a subset of columns
+- `withColumn()`: returns a new DataFrame by adding a column or replacing the existing column that has the same name. 
+The first parameter is the name of the new column, the second is an expression of how to compute it.
+- `show()`: prints out the first n rows in the DataFrame. By default, it prints the first 20 rows.
+- `printSchema()`: prints out the schema of the DataFrame in a tree format.
+- `describe()`: computes statistics for numeric columns, including count, mean, stddev, min, and max. If no columns are
+    given, this function computes statistics for all numerical columns.
+
+#### Aggregate functions
+Spark SQL provides built-in methods for the most common aggregations such as `count()`, `countDistinct()`, `avg()`, 
+`max()`, `min()`, etc. in the pyspark.sql.functions module. 
+
+In many cases, there are multiple ways to express the same aggregations. For example, if we would like to compute one 
+type of aggregate for one or more columns of the DataFrame we can just simply chain the aggregate method after a 
+`groupBy()`. If we would like to use different functions on different columns, `agg()` comes in handy. 
+For example `agg({"salary": "avg", "age": "max"})` computes the average salary and maximum age.
+
+#### User defined functions (UDF)
+In Spark SQL we can define our own functions with the udf method from the pyspark.sql.functions module. The default 
+type of the returned variable for UDFs is string. If we would like to return another type we need to explicitly do so 
+by using the different types from the pyspark.sql.types module.
+
+#### Window functions
+Window functions are a way of combining the values of ranges of rows in a DataFrame. When defining the window we can 
+choose how to sort and group (with the `partitionBy` method) the rows and how wide of a window we'd like to use 
+(described by `rangeBetween` or `rowsBetween`).
+
+For further information see the [Spark SQL, DataFrames and Datasets Guide](https://spark.apache.org/docs/latest/sql-programming-guide.html) 
+and the [Spark Python API Docs](https://spark.apache.org/docs/latest/api/python/index.html).
