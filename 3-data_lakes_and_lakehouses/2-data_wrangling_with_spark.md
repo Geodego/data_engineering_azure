@@ -2,6 +2,28 @@
 
 ## Table of Contents
 
+- [Functional Programming](#functional-programming)
+  - [Introduction](#introduction)
+  - [Why Use Functional Programming?](#why-use-functional-programming)
+  - [Procedural Programming Example](#procedural-programming-example)
+  - [Pure Functions Analogy](#pure-functions-analogy)
+- [Spark](#spark)
+  - [Spark DAGs](#spark-dags)
+  - [Maps and Lambda Functions](#maps-and-lambda-functions)
+  - [Distributed Data Stores](#distributed-data-stores)
+  - [SparkSession](#sparksession)
+  - [Reading and Writing Data into Spark Data Frames](#reading-and-writing-data-into-spark-data-frames)
+- [Imperative vs Declarative Programming](#imperative-vs-declarative-programming)
+  - [Data Wrangling with Data Frames](#data-wrangling-with-data-frames)
+    - [General Functions](#general-functions)
+    - [Aggregate Functions](#aggregate-functions)
+    - [User Defined Functions (UDF)](#user-defined-functions-udf)
+    - [Window Functions](#window-functions)
+  - [Spark SQL](#spark-sql)
+    - [Spark SQL Resources](#spark-sql-resources)
+    - [Useful Instructions](#useful-instructions)
+  - [Resilient Distributed Datasets (RDDs)](#resilient-distributed-datasets-rdds)
+
 ## Functional Programming
 
 ### Introduction
@@ -253,7 +275,7 @@ choose how to sort and group (with the `partitionBy` method) the rows and how wi
 For further information see the [Spark SQL, DataFrames and Datasets Guide](https://spark.apache.org/docs/latest/sql-programming-guide.html) 
 and the [Spark Python API Docs](https://spark.apache.org/docs/latest/api/python/index.html).
 
-## Spark SQL
+### Spark SQL
 
 Spark comes with a SQL library for querying data with a declarative approach. This library lets you query DataFrames 
 using the same SQL syntax you'd use in a tool like MySQL or Postgres.
@@ -262,12 +284,32 @@ Spark automatically optimizes your SQL code, to speed up the process of manipula
 the same calculations with Spark SQL as you could with DataFrames, though the syntax can be slightly different. Another
 difference is that UDFs have to be registered before they can be used.
 
-### Spark SQL resources
+#### Spark SQL resources
 Here are a few resources that you might find helpful when working with Spark SQL:
 - [Spark SQL built-in functions](https://spark.apache.org/docs/latest/api/sql/index.html)
 - [Spark SQL guide](https://spark.apache.org/docs/latest/sql-getting-started.html)
 
-### Useful instructions
+#### Useful instructions
 - `df.createOrReplaceTempView("df_table")`: where df is a DataFrame, creates a temporary view of the DataFrame that we
 can query with SQL. This effectively creates a temporary SQL table from the DataFrame.
 - `spark.sql.register` is used to register a UDF as a Spark SQL function. 
+
+### Resilient Distributed Datasets (RDDs)
+
+The code you write in Spark higher APIs like DataFrames and SQL first goes through a query optimizer to turn it into
+an execution plan before it can be ran. Spark uses a query optimizer called Catalyst. Catalyst translates your code
+into the same DAG whether you're using DataFrames, SQL, or RDDs. So you won't notice much difference between using
+either of these APIs. The code generated based on the execution plan, opérates on a lower level data abstraction called
+Resilient Distributed Datasets (RDDs).
+
+<img src="./0-images/chap2/spark_catalyst.png" alt="spark_catalyst.png" width=400 />
+
+
+RDDs are a low-level abstraction of the data. In the first version of Spark, you worked directly with RDDs. You can 
+think of RDDs as long lists distributed across various machines. You can still use RDDs as part of your Spark code 
+although data frames and SQL are easier. This course won't go into the details of RDD syntax, but you can find some 
+further explanation of the difference between RDDs and DataFrames in Databricks' 
+[A Tale of Three Apache Spark APIs: RDDs, DataFrames, and Datasets](https://databricks.com/blog/2016/07/14/a-tale-of-three-apache-spark-apis-rdds-dataframes-and-datasets.html) 
+blog post.
+
+Here is a link to the Spark documentation's [RDD programming guide](https://spark.apache.org/docs/latest/rdd-programming-guide.html).
