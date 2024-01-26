@@ -252,3 +252,22 @@ choose how to sort and group (with the `partitionBy` method) the rows and how wi
 
 For further information see the [Spark SQL, DataFrames and Datasets Guide](https://spark.apache.org/docs/latest/sql-programming-guide.html) 
 and the [Spark Python API Docs](https://spark.apache.org/docs/latest/api/python/index.html).
+
+## Spark SQL
+
+Spark comes with a SQL library for querying data with a declarative approach. This library lets you query DataFrames 
+using the same SQL syntax you'd use in a tool like MySQL or Postgres.
+
+Spark automatically optimizes your SQL code, to speed up the process of manipulating and retrieving data. You can run 
+the same calculations with Spark SQL as you could with DataFrames, though the syntax can be slightly different. Another
+difference is that UDFs have to be registered before they can be used.
+
+### Spark SQL resources
+Here are a few resources that you might find helpful when working with Spark SQL:
+- [Spark SQL built-in functions](https://spark.apache.org/docs/latest/api/sql/index.html)
+- [Spark SQL guide](https://spark.apache.org/docs/latest/sql-getting-started.html)
+
+### Useful instructions
+- `df.createOrReplaceTempView("df_table")`: where df is a DataFrame, creates a temporary view of the DataFrame that we
+can query with SQL. This effectively creates a temporary SQL table from the DataFrame.
+- `spark.sql.register` is used to register a UDF as a Spark SQL function. 
