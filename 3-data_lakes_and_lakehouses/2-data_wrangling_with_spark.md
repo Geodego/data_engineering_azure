@@ -307,9 +307,35 @@ Resilient Distributed Datasets (RDDs).
 
 RDDs are a low-level abstraction of the data. In the first version of Spark, you worked directly with RDDs. You can 
 think of RDDs as long lists distributed across various machines. You can still use RDDs as part of your Spark code 
-although data frames and SQL are easier. This course won't go into the details of RDD syntax, but you can find some 
+although data frames and SQL are easier. We won't go into the details of RDD syntax, but you can find some 
 further explanation of the difference between RDDs and DataFrames in Databricks' 
 [A Tale of Three Apache Spark APIs: RDDs, DataFrames, and Datasets](https://databricks.com/blog/2016/07/14/a-tale-of-three-apache-spark-apis-rdds-dataframes-and-datasets.html) 
 blog post.
 
+Here is an example of how to create an RDD from a list:
+```python
+from pyspark import SparkContext
+
+# Create a SparkContext
+sc = SparkContext('local[*]', 'example')
+
+# Define a Python list
+my_list = [1, 2, 3, 4, 5]
+
+# Create an RDD from the list
+my_list_rdd = sc.parallelize(my_list)
+
+# Print the RDD elements
+print(my_list_rdd.collect())
+
+# Stop the SparkContext (usually done at the end of your Spark application)
+sc.stop()
+```
+in this example:
+- We create a SparkContext object named sc using 'local[*]' as the master URL, which runs Spark in local mode using all 
+available CPU cores.
+- We use the sc.parallelize() method to create an RDD.
+
 Here is a link to the Spark documentation's [RDD programming guide](https://spark.apache.org/docs/latest/rdd-programming-guide.html).
+
+

@@ -1,0 +1,113 @@
+# Spark Debugging and Optimization
+
+## Table of Contents
+
+## Why debugging Spark is hard
+
+- Previously, we ran Spark codes in the local mode where you can easily fix the code on your laptop because you can view 
+the error in your code on your local machine.
+- For Standalone mode, the cluster (group of manager and executor) load data, distribute the tasks among them and the 
+executor executes the code. The result is either a successful output or a log of the errors. The logs are captured in a 
+separate machine than the executor, which makes it important to interpret the syntax of the logs - this can get tricky.
+- One other thing that makes the standalone mode difficult to deploy the code is that your laptop environment will be 
+completely different than cloud platforms. As a result, you will always have to test your code rigorously on different 
+environment settings to make sure the code works.
+
+## Error Types
+
+Let's say you've written your Spark program but there's a bug somewhere in your code.
+- The code seems to work just fine, but Spark uses lazy evaluation.
+- Spark waits as long as it can before running your code on data, so you won't discover an error right away.
+- This can be very different from what you've seen in traditional Python.
+
+### Code Errors
+
+Typos are probably the simplest errors to identify
+
+- A typo in a method name will generate a short attribute error
+- An incorrect column name will result in a long analysis exception error
+- Typos in variables can result in lengthy errors
+- While Spark supports the Python API, its native language is Scala. That's why some of the error messages are referring 
+to Scala, Java, or JVM issues even when we are running Python code.
+- Whenever you use `collect`, be careful how much data are you collecting
+- Mismatched parentheses can cause end-of-file (EOF) errors that may be misleading
+
+### Data errors
+
+When you work with big data, some of the records might have missing fields or have data that's malformed or incorrect in 
+some other unexpected way.
+- If data is malformed, Spark populates these fields with nulls.
+- if you try to do something with a missing field, nulls remain nulls
+
+When you have data issue you see a corrupted record column showin up. To find corrupted records you can use:
+```python
+from pyspark.sql import SparkSession
+spark = SparkSession.builder.getOrCreate()
+df = spark.read.json("data/sparkify_log_small_error.json")
+df.where(df("_corrupt_record").isNotNull()).collect()
+```
+
+## Debugging Code
+If you were writing a traditional Python script, you might use print statements to output the values held by variables. 
+These print statements can be helpful when debugging your code, but this won't work on Spark. Think back to how Spark 
+runs your code.
+
+- You have a driver node coordinating the tasks of various worker nodes.
+- Code is running on those worker nodes and not the driver, so print statements will only run on those worker nodes.
+- You cannot directly see the output from them because you're not connected directly to them.
+- Spark makes a copy of the input data every time you call a function. So, the original debugging variables that you 
+created won't actually get loaded into the worker nodes. Instead, each worker has their own copy of these variables, 
+and only these copies get modified.
+
+To get around these limitations, Spark gives you special variables known as **accumulators**. Accumulators are like 
+global variables for your entire cluster.
+
+### How to Use Accumulators
+As the name hints, accumulators are variables that accumulate. Because Spark runs in distributed mode, the workers are 
+running in parallel, but asynchronously. For example, worker 1 will not be able to know how far worker 2 and worker 3 
+are done with their tasks. With the same analogy, the variables that are local to workers are not going to be shared to 
+another worker unless you accumulate them. Accumulators are used for mostly sum operations, like in Hadoop MapReduce, 
+but you can implement it to do otherwise.
+
+### Spark broadcast 
+Spark Broadcast variables are secured, read-only variables that get distributed and cached to worker nodes. This is 
+helpful to Spark because when the driver sends packets of information to worker nodes, it sends the data and tasks 
+attached together which could be a little heavier on the network side. Broadcast variables seek to reduce network 
+overhead and to reduce communications. Spark Broadcast variables are used only with Spark Context.
+
+Broadcast is usually used for broadcast joins. Broadcast joins are used when one of the tables is small enough to fit 
+into the memory of a single machine. In this case, the smaller table is copied to each machine, and the join is
+performed locally on each machine. Broadcast joins are like map-side joins in Hadoop MapReduce.
+
+### Different type of Spark functions
+
+There are two types of functions in Spark:
+- Transformations
+- Actions
+
+Spark uses lazy evaluation to evaluate RDD and dataframe. Lazy evaluation means the code is not executed until it is 
+needed. The __ action__ functions trigger the lazily evaluated functions.
+
+For example,
+```python
+df = spark.read.load("some csv file")
+df1 = df.select("some column").filter("some condition")
+df1.write("to path")
+```
+- In this code, `select` and `filter` are transformation functions, and `write` is an action function.
+- If you execute this code line by line, the second line will be loaded, but you will not see the function being 
+executed in your Spark UI.
+- When you actually execute using action `write`, then you will see your Spark program being executed:
+  - `select` --> `filter` --> `write` chained in Spark UI
+  - but you will only see `write` show up under your tasks.
+
+This is significant because you can chain your RDD or dataframe as much as you want, but it might not do anything until 
+you actually trigger with some action words. And if you have lengthy transformations, then it might take your executors 
+quite some time to complete all the tasks.
+
+## Code optimization
+
+
+
+
+
