@@ -107,6 +107,50 @@ quite some time to complete all the tasks.
 
 ## Code optimization
 
+### Data Skewness
+
+Skewed data means non-optimal partitioning, the data is heavy on few partitions. This could be problematic.
+
+Imagine you’re processing a dataset, and the data is distributed through your cluster by partition.
+
+- In this case, only a few partitions will continue to work, while the rest of the partitions do not work.
+- If you were to run your cluster like this, you will get billed by the time of the data processing, which means you 
+will get billed for the duration of the longest partitions working.
+- We would like to re-distribute the data in a way so that all the partitions are working.
+
+Data skew comes up in many domains. Sometimes 80% of the data is coming from 20% of the users. It is called the Pareto
+principle. The best way to catch this is to run a Spark job to get a summary of the data. 
+
+Once you have identified the skewness there are two main ways to solve it:
+- the first approach is to change the way you divide up the workload  for the computers in your cluster. For example 
+instead of splitting the data by the `song title`, divide up the data by another field like `user` or `timestamp`.
+- the second approach is to break the data into smaller parts, which Spark calls partitions.
+
+In order to look at the skewness of the data:
+- Check for MIN, MAX and data RANGES
+- Examine how the workers are working
+- Identify workers that are running longer and aim to optimize it.
+
+### Optimizing for Data Skewness
+The goal is to change the partitioning columns to take out the data skewness (e.g., the `year` column is skewed).
+- 1. Use Alternate Columns that are more normally distributed:
+    - For example, instead of partitioning by `year`, you can partition by `Issue_Date` column that isn't skewed.
+- 2. Make composite keys:
+    - For e.g., you can make composite keys by combining two columns so that the new column can be used as a composite 
+  key. For e.g, combining the `Issue_Date` and `State` columns to make a new composite key titled `Issue_Date + State`. 
+  The new column will now include data from 2 columns, e.g., `2017-04-15-NY. This column can be used to partition the 
+  data, create more normally distributed datasets (e.g., distribution of parking violations on 2017-04-15 would now be 
+  more spread out across states, and this can now help address skewness in the data).
+- 3. Partition by number of Spark workers:
+    - Another easy way is using the Spark workers. If you know the number of your workers for Spark, then you can easily 
+  partition the data by the number of workers `df.repartition(number_of_workers)` to repartition your data evenly across 
+  your workers. For example, if you have 8 workers, then you should do `df.repartition(8)` before doing any operations.
+
+### Practice Optimizing for Data Skewness
+Here is a link to the starter code for you to [practice repartitioning](https://github.com/udacity/nd027-c3-data-lakes-with-spark/tree/master/Debugging_And_Optimization/exercises/starter) 
+to address challenges with Skewed data. You will find the zipped Parking_violations.csv file below. 
+This file is not available in the gitrepo because of its size: [Parking Violation.Csv](https://video.udacity-data.com/topher/2020/May/5eabed5e_parking-violation.csv/parking-violation.csv.zip)
+
 
 
 
