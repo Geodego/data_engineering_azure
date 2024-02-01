@@ -114,6 +114,39 @@ resource.
   - click on the cluster name and use `Terminate` button to turn off the cluster.
   - It doesn't mean that the cluster is deleted, it just means that it is turned off and you're not being charged for it.
   
+#### Writing Spark Scripts in Databricks
 
+Azure databricks has a native distributed file storage called Databricks File System or **DBFS** you can read and write 
+from. An easy way to experiment and do developmental work is to upload files to DBFS through the workspace, and write 
+data back to it. You can manage the DBFS through the workspace as well.
 
+The DBFS also provides native table storage and a file format for Delta lake to use when developing a Delta lakehouse 
+solution
 
+Some useful functions for working with data within Databricks are read, write, and saveAsTable.
+- Read: `spark.read.format`
+- Write: `<dataframe>.write.format`. To write a file to Delta, and to overwrite in case there's already sata in: 
+`df.write.format("delta").mode("overwrite").save("/delta/data")`
+- Save Dataframe: `saveAsTable`: `df.write.format("delta").mode("overwrite").saveAsTable("datatable")`
+
+By selecting the format of read, and write operations, files can be read from and written to the DBFS in various formats 
+such as csv or to and from Delta Lake using the “delta” format.
+
+Similarly, dataframes can be saved to Delta Lake simply by using the saveAsTable function and providing a table name for 
+the data. To start working with data in Databricks:
+- Select `Workspace` from the left-hand navigation.
+- Under `Shared`, clock on the down arrow select `Create` and then `Notebook`.
+- Give it a name and select the language you want to use (here Python) and choose the cluster you want to use to run the
+notebook.
+- Now, any time you want to return to this notebook, you can select it from the left-hand navigation under `Workspace`,
+`Shared`, and the name of the notebook.
+- On the top of the screen, you can see the name of the cluster you are using. If the cluster is not running, you can
+click on the `Start Cluster` button to start it.
+- To confirm that data has been saved go to the `Data` tab on the left-hand navigation:
+  - under the `Database Tables` section, you can see the table you created using the `saveAsTable` function.
+  - under the `DBFS` section, you can see the file you created using the `save` function. These files are stored in the
+  parquet format in the DBFS.
+- In order to be able to see the DBFS button at the top of the screen, you need to make a configuration change in your 
+Azure Databricks workspace. To do this:
+  - Go to `settings`, `admin console`, `Workspace settings`.
+  - scroll to `Advanced` and find the setting named `DBFS file browser` and make sure it is set to `Enabled`.
