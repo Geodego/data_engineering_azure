@@ -2,6 +2,14 @@
 
 ## Table of Contents
 
+- [Introduction](#introduction)
+  - [Where Does Azure Databricks Fit?](#where-does-azure-databricks-fit)
+- [Using Spark on Azure](#using-spark-on-azure)
+  - [Creating a Databricks Workspace](#creating-a-databricks-workspace)
+  - [Creating a Spark Cluster in Databricks](#creating-a-spark-cluster-in-databricks)
+    - [Writing Spark Scripts in Databricks](#writing-spark-scripts-in-databricks)
+
+
 ## Introduction 
 Azure Databricks combines a range of data engineering technologies such as Apache Spark, Delta Lake, and MlFlow in a 
 cloud-hosted environment that provides highly available, high performance data engineering within Microsoft Azure.
@@ -114,7 +122,7 @@ resource.
   - click on the cluster name and use `Terminate` button to turn off the cluster.
   - It doesn't mean that the cluster is deleted, it just means that it is turned off and you're not being charged for it.
   
-#### Writing Spark Scripts in Databricks
+### Writing Spark Scripts in Databricks
 
 Azure databricks has a native distributed file storage called Databricks File System or **DBFS** you can read and write 
 from. An easy way to experiment and do developmental work is to upload files to DBFS through the workspace, and write 
