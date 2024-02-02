@@ -154,7 +154,8 @@ click on the `Start Cluster` button to start it.
   - under the `Database Tables` section, you can see the table you created using the `saveAsTable` function.
   - under the `DBFS` section, you can see the file you created using the `save` function. These files are stored in the
   parquet format in the DBFS.
-- In order to be able to see the DBFS button at the top of the screen, you need to make a configuration change in your 
-Azure Databricks workspace. To do this:
+- **enable DBFS file browsing**: In order to be able to see the DBFS button at the top of the screen, you need to make a 
+configuration change in your Azure Databricks workspace. To do this:
   - Go to `settings`, `admin console`, `Workspace settings`.
   - scroll to `Advanced` and find the setting named `DBFS file browser` and make sure it is set to `Enabled`.
+  - refresh your browser for the change to take effect.
