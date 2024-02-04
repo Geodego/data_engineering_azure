@@ -110,3 +110,84 @@ df.write.format("delta") \
 - using the left-hand navigation, go to the `Data` tab and select `DBFS`
 - There is now a `delta` folder with a `data` folder inside it. This is where the data from the csv file is stored as 
 a parquet file.
+
+### Creating and Deleting Tables
+There are several ways to create tables using scripts. First, you can use a traditional CREATE TABLE SQL statement:
+```python
+spark.sql("CREATE TABLE LoanData(" \
+  "loan_id BIGINT, " + \
+  "paid_amnt DOUBLE" 
+)
+```
+Alternately, you can create a Delta Lake table by using the saveAsTable function from a Spark dataframe:
+```python
+df.write.format("delta") \
+  .mode("overwrite") \
+  .saveAsTable("LoanData")
+```
+
+- click on the `Data` tab in the left-hand navigation and go to the DBFS file system.
+- From the previous example, we already have a folder called `data` in the delta lake. This is the data we will use to
+create a Delta table.
+- Go to `Workspace` from the left-hand navigation, and select the workspace `demo` we created earlier.
+- There are two different way to create a table from the Delta data:
+  - The first way involves reading the data in from the Delta file:
+    - ingest the data:
+    ```python
+        df = spark.read.format("delta") \
+            .load("/delta/data")
+    ```
+    - run the cell. We now have a dataframe that we can use to create a table. Now:
+    ```python
+        df.write.format("delta") \
+          .mode("overwrite") \
+          .saveAsTable("datatable")
+    ``` 
+    - run the cell. Now we have a table called `datatable`.
+    - Go back to the `Data` tab and select `Database Tables`. We can see the `datatable` we just created.
+  - The second way uses Spark SQL to create a table from the Delta data:
+    - run the following code:
+    ```python
+        spark.sql("CREATE TABLE datatable2 USING DELTA LOCATION '/delta/data'")
+    ```
+    - run the cell. Now we have a table called `datatable2`.
+    - Go back to the `Data` tab and select `Database Tables`. We can see the `datatable` we just created. 
+- To delete a table:
+  - you can use SQL: 
+    - Coming back to the notebook, run the following code:
+    ```python
+        spark.sql("DROP TABLE IF EXISTS datatable2")
+    ```
+    - run the cell. Now the table `datatable2` is deleted.
+  - Or you can use the arrow next to your table name and click `Delete`.
+
+### Reading and Writing Data
+You need to be able to read and write data both to and from files as well as to and from tables.
+
+To **read data** from a Delta Table in Azure Databricks, you can simply use the spark.table syntax to read by table 
+name. Alternately, you can use the full data location path with the spark.read function using the delta format. Both of 
+these functions will return a spark dataframe.
+```python
+spark.table("default.tablename")
+spark.read.format("delta").load("/delta/tablename") 
+```
+
+To **write data** to a Delta Table, simply use the write function from a spark dataframe. Just as with reading, you can 
+write either to a table or to a delta file location. Notice the “append” mode used here. This is a way to update 
+existing data rather than simply overwrite the data.
+```python
+df.write.format("delta").mode("append") \    
+.saveAsTable("default.tablename")
+
+df.write.format("delta").mode("append")  \      
+.save("/delta/tablename")
+```
+
+One way to quickly write data into a Delta Lake table is to use the `USING DELTA LOCATION` syntax when creating a table. 
+You can also use the dataframe `saveAsTable` function that we used to create a table in the first place.
+```python
+spark.sql("CREATE TABLE TableName" \
+  "USING DELTA LOCATION '/delta/data'"
+)
+```
+
