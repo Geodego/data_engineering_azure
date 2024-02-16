@@ -149,7 +149,7 @@ Hadoop has a Distributed File System, HDFS, to store data. HDFS splits files int
 replicates these blocks across the cluster. This way, the data is stored in a fault tolerant way and can be accessed in 
 digestible chunks.
 
-<img src="./0-images/chap2/distributed_data_stores.png" alt="distributed_data_stores.png" width=400 />
+<img src="./0-images/chap2/distributed_data_stores.png" alt="distributed_data_stores.png" width=732 />
 
 If you don't want to maintain your own cluster, most cloud computing platforms like AWS, Azure, and Google Cloud provide 
 distributed file systems.
@@ -170,7 +170,7 @@ sc= SparkContext(conf = configure)
 
 
 
-To read data frames, we need to use Spark SQL equivalentof SparkContext, the SparkSession. Similarity to the SparkConf, 
+To read data frames, we need to use Spark SQL equivalent of SparkContext, the SparkSession. Similarity to the SparkConf, 
 we can specify some parameters to create a SparkSession. getOrCreate() for example, means that if you already have a 
 SparkSession running, instead of creating a new one, the old one will be returned and its parameters will be modified to 
 the new configurations.

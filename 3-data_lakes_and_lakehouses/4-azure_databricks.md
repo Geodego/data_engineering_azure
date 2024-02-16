@@ -28,7 +28,7 @@ Benefits of using Azure Databricks include:
 One possible solution involving Azure Databricks would utilize Databricks between a data lake and Azure Synapse or 
 PowerBI.
 
-<img src="0-images/chap4/databricks1.png" alt="databricks1.png" width="400"/>
+<img src="0-images/chap4/databricks1.png" alt="databricks1.png" width="650"/>
 
 In this scenario as an analytics platform,
 - Azure data factory is used to ingest unstructured and structured data from business sources into Azure Data lake storage
@@ -41,7 +41,7 @@ scenario:
 - A variation of this use would pull the data lake back into Azure Databricks and use Delta Lake. This variation would 
 implement the lakehouse architecture design.
 
-<img src="0-images/chap4/databricks2.png" alt="databricks2.png" width="400"/>
+<img src="0-images/chap4/databricks2.png" alt="databricks2.png" width="650"/>
 
 ## Using Spark on Azure
 
