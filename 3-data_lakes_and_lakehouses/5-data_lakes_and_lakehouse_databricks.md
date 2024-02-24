@@ -37,7 +37,7 @@ Data Factory, and Azure Databricks. It provides a solid foundation for many comm
 
 ## Delta Lake using Azure Databricks
 
-<img src="0-images/chap5/delta_lake.png" alt="delta_lake.png" width="650"/>
+<img src="0-images/chap5/delta_lake.png" alt="delta_lake.png" width="970"/>
 
 There are several tasks you need to understand in order to get started working with Delta Lake in Azure Databricks.
 The entry to working with Delta Lake in Azure is through the Databricks workspace. Once you have created your workspace, 
@@ -191,3 +191,65 @@ spark.sql("CREATE TABLE TableName" \
 )
 ```
 
+### Stages of Data processing
+
+<img src="0-images/chap5/stages_data_processing.png" alt="stages_data_processing" width="650"/>
+
+First, data are ingested raw into ingestion tables. This is commonly referred to as the Bronze stage.
+
+Next, data are refined and combined into what is commonly called the Silver stage. Data at this stage can often be used 
+by data scientists and machine learning modelers.
+
+The final stage is the creation of features and aggregates such as a star schema’s fact and dimension tables. This is 
+called the Gold stage and data at this stage are useful for common business intelligence and analytics solutions such as 
+Azure Synapse or PowerBI.
+
+### Processing Delta lake Table Stages
+
+**Step 1: Bronze stage**: Ingest data into the delta file system.
+- Go to the workspace and create a new notebook. In the first cell:
+```python
+df = spark.read.format("csv") \
+  .option("inferSchema", "true") \
+  .option("header", "true") \
+  .option("sep", ",") \
+  .load("/FileStore/demo2/stolenvehicules.csv")
+
+df.write.format("delta") \
+    .save("/delta/bronze_vehicles")
+```
+- use the `run cell` button. 
+
+**Step 2**: check what the data looks like:
+- In a new cell:
+```python
+display(df)
+```
+- we see that there are no keys and that there are duplicates.
+
+**Step 3: Silver stage**: Create a key and remove duplicates. Save the result in a delta table.
+- In a new cell:
+```python
+df = spark.read.format("delta") \
+  .load("/delta/bronze_vehicles")
+
+from pyspark.sql.functions import sha2, concat_ws
+df = df.dropDuplicates(df.columns) \
+  .withColumn("hash", sha2(concat_ws("||", *df.columns), 256))
+
+df.write.format("delta") \
+    .mode("overwrite") \
+    .saveAsTable("silver_vehicles")
+```
+- using the 'data' tab, we can check that our table has been saved.
+
+**Step 4: Gold stage** Create a table that aggregate some information
+- In a new cell:
+```python
+df = spark.table("silver_vehicles")
+df = df.groupBy("VehicleType", "DateStolen").count()
+
+df.write.format("delta") \
+    .mode("overwrite")  \
+    .saveAstable("gold_stolenbytypeanddate")
+```
