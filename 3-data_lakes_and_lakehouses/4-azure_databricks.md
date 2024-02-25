@@ -8,6 +8,7 @@
   - [Creating a Databricks Workspace](#creating-a-databricks-workspace)
   - [Creating a Spark Cluster in Databricks](#creating-a-spark-cluster-in-databricks)
     - [Writing Spark Scripts in Databricks](#writing-spark-scripts-in-databricks)
+    - [Creating a Notebook](#creating-a-notebook)
 
 
 ## Introduction 
@@ -106,7 +107,7 @@ main Databricks workspace menu.
 Here are the steps to create a cluster:
 - From the Azure Databricks workspace, click on `Compute` on the left-hand side. This brings you to the compute tab 
 where we can manage our clusters.
-- Click on `Create Cluster` button to create a new cluster.
+- Click on `Create Cluster`  or `Create compute` button to create a new cluster.
 - `Cluster Name`: give your cluster a name
 - Choose the `Cluster Mode`, (here we choose `Standard`)
 - Choose the `Databricks Runtime Version` (here we choose `Runtime: 10.4 LTS (Scala 2.12, Spark 3.2.1`), this select 
@@ -141,7 +142,10 @@ By selecting the format of read, and write operations, files can be read from an
 such as csv or to and from Delta Lake using the “delta” format.
 
 Similarly, dataframes can be saved to Delta Lake simply by using the saveAsTable function and providing a table name for 
-the data. To start working with data in Databricks:
+the data. 
+
+#### Creating a Notebook
+To start working with data in Databricks:
 - Select `Workspace` from the left-hand navigation.
 - Under `Shared`, clock on the down arrow select `Create` and then `Notebook`.
 - Give it a name and select the language you want to use (here Python) and choose the cluster you want to use to run the
