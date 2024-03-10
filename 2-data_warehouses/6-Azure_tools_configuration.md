@@ -27,7 +27,7 @@ This document describes how to configure some of the tools used in Azure data wa
 ### Create a Synapse workspace
 
 - From Azure portal Home space click on `Create a resource`
-- There is a space for looking for resources: type 'azure synapse'
+- There is a space for looking for resources: type 'azure synapse', and select `Azure Synapse Analytics`
 - Check that the right resource has been selected and press `create`
 - That brings you to Azure Wizard for creating resources. At the top of the Wizard you see the steps you need to walk
 through (Basics, Security, Networking...). `Basics` and `Security` have a star in front of them indicating they are
@@ -93,16 +93,23 @@ Ingest, Explore and analyze, Visualize.
   - `Server`: select `Create new`, this brings you to the `Create SQL Database server` wizard
     - `Server name`: e.g. 'udacitydemoc2dend'. This will be part of a URL. That means this name must be unique across all 
     of Azure. You should use a name that will help you identify the server among all of the ressources in your portal.
-    - `Server admin login`: e.g. 'sqladminuser'
-    - `Password`: define a password for the admin user
+    - select `use sql authentication`:
+      - `Server admin login`: e.g. 'sqladminuser'
+      - `Password`: define a password for the admin user
     - once  you have configured the server, click on `OK` and you'll be back to the `Create SQL Database` wizard
   - In the server dropdown, we see the server we just created. Select it.
   - Then in `General purpose` select `Configure database` to configure your database with regard to compute and storage.
     - In `Service tier` select `Basic
     - select `Apply`
     - Now it shows that your a configured for `Basic` `compute + storage
+  - select `Locally-redundant backup storage`
+  - In the `Additional settings` tab select:
+    - `Sample`
   - we can leave the rest of the settings as default and go directly to the tab `Review + create`
   - Click on `Create`
+  - To be able to access the database with your IP, go to the server and in `Security` select `Networking`,
+    - In `public access` select `Selected Networks`
+    - In `Firewall rules` select `Add client IP` and click on `Save`
 
 ## Azure Blob Storage
 - From Azure portal Home space click on `Create a resource`
@@ -113,6 +120,7 @@ Ingest, Explore and analyze, Visualize.
   - `Subscription`: select the subscription you want to use
   - `Resource group`: select the resource group you want to use
   - `Storage account name`: e.g. 'udacitydemoc2dend'.
+- In `Redundancy` select `LRS (Locally-redundant storage)`
 - We can leave the rest of the settings as default and go directly to the tab `Review + create`
 - Click on `Create`
 

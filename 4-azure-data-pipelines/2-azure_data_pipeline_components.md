@@ -2,6 +2,16 @@
 
 ## Table of Contents
 
+- [Expert Perspective: Data Pipelines](#expert-perspective-data-pipelines)
+- [Pipelines and Activities](#pipelines-and-activities)
+- [Creating Azure Resources](#creating-azure-resources)
+  - [Creating an Azure SQL Database resource](#creating-an-azure-sql-database-resource)
+  - [Creating an Azure Data Lake Gen2 resource](#creating-an-azure-data-lake-gen2-resource)
+  - [Creating an Azure Data Factory resource](#creating-an-azure-data-factory-resource)
+- [Pipeline Component: Linked Services](#pipeline-component-linked-services)
+- [Pipeline Components: Datasets](#pipeline-components-datasets)
+  - [Creating a Dataset](#creating-a-dataset)
+
 ## Expert Perspective: Data Pipelines
 
 Organizations have been accumulating vast amounts of structured and unstructured data throughout their processes to 
@@ -31,7 +41,12 @@ example:
 
 ## Creating Azure Resources
 
+### Creating an Azure SQL Database resource
+see [Azure SQL Database](https://github.com/Geodego/data_engineering_azure/blob/master/2-data_warehouses/6-Azure_tools_configuration.md#azure-sql-database)
+For requesting the database select on the left `Query editor (preview)`
 ### Creating an Azure Data Lake Gen2 resource
+see [Azure Data Lake Gen2](https://github.com/Geodego/data_engineering_azure/blob/master/2-data_warehouses/6-Azure_tools_configuration.md#azure-blob-storage)
+
 In the `Advanced` tab and enable the `hierarchy namespace` feature. That will make the Storage account a Data Lake Gen2.
 
 ### Creating an Azure Data Factory resource
@@ -48,6 +63,8 @@ In the `Advanced` tab and enable the `hierarchy namespace` feature. That will ma
   - check the box `Configure Git later`
 - We can leave the rest of the settings as default and go directly to the tab `Review + create`
 - Click on `Create`
+
+To use the Azure Data Factory, click on `Open ` 
 
 
 
