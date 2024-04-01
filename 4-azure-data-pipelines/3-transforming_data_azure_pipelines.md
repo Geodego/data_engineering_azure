@@ -29,6 +29,7 @@ three types of transformations available in Mapping Data Flows:
 - Multiple inputs/outputs: These transformations allow us to generate new data with joins, unions, or splitting the data.
 
 Below are the various types of transformations:
+
 <img src="./0-images/chap3/data-flow-transformation-types.jpg" alt="data-flow-transformation-types.jpg" width="650"/>
 
 ### Expression Builder
@@ -58,6 +59,89 @@ Expressions are composed of columns from the input schema, functions, and parame
   will not work. In that case you need to uncheck the `Auto Mapping` and map the fields manually.
   - Go to `Data Preview` to see how the data will look like in the destination.
   - Give a name to the data flow and click on `Publish All`
+
+## Transform and aggregate data using Data Flows
+
+For this example you need to create the `aggregate` table in Synapse.
+Back to ADF:
+- Create the dataset related to the `aggregate` table
+- Create a new data flow
+  - add the source sql table
+  - Filter:
+    - add a filter activity to filter the wrong sales order. For example `sales_order_id`!=xxxx.
+    - click on `refresh` to make sure the data is filtered
+    - click on `save and finish`
+  - New column:
+  - click on `+` and select `Derived Column`
+    - give the column a name
+    - in the expression builder you can create a new column. For example `sales_order_id`+1
+    - click on `save and finish`
+  - create a `sink`:
+    - select the synapse table you've created
+    - and map the fields
+    - click on `Data Preview` to see how the data will look like in the destination.
+  - Publish the data flow
+- Create a new pipeline to test the data flow
+  - Drag a data flow activity 
+  - select in `settings` the data flow you've created
+  - select the link service
+  - publish the pipeline
+- Trigger the pipeline:
+  - click on `Add Trigger` and select `Trigger Now`
+  - on the `Monitor` tab you can see the status of the pipeline
+- Go to synapse to see the data in the `aggregate` table
+
+## Create Pipeline Activity
+
+After creating the data flow, you need to create a pipeline activity to execute the data flow. The pipeline activity is a
+container that defines the workflow of the data flow. The pipeline activity can be triggered manually or scheduled to run
+at a specific time.
+- In th `author` tab, click on the `...` near `Pipelines` and select `+ New Pipeline`
+- drag the data flow activity of interest to the pipeline
+  - Give a name to the activity
+  - in `settings`:
+    - select the data flow you've created
+    - In the `run on azure` section you can select the integration runtime you created or `autoresolveintegrationruntime`
+    - In order to transfer the data to synapse, you need to select a staging folder.
+    - select the link service that you created for the staging container
+    - select the container
+    - click `ok`
+- You can add others activities to the pipeline and show dependencies between them with the arrows
+- Give a name to the pipeline and click on `Publish All`
+
+## Debug and trigger pipelines
+
+After a pipeline is created, you will have to trigger it to run it, debug it, or monitor the pipeline activities.
+Executing the pipeline to run the activities is called triggering the pipeline. The pipeline can be triggered to
+execute immediately or at a scheduled time.Debugging helps to run the pipelines activities without publishing the source
+control repository.You can also set the breakpoints to interactively debug various part of the pipeline.
+
+Once triggered the pipeline needs to be monitored to make sure there are no failures. This will monitor every step of 
+the pipeline and associate data flows with detailed error messages if there are any failures. Failed pipelines can be 
+rerun from the pipeline run screen.
+
+We can set the alerts to raise based on criteria. Alerts can be sent as emails, SMS...
+
+### Exercise Debug and Trigger Pipelines
+
+- You don't have to publish the pipeline to debug it
+- If you have a debug session active in the debug tab you have 2 options: use that session or integration tun time. Here
+we use the dataflow debug session.
+- Then you can use the integration run time or the debug cluster. We use the debug cluster.
+- The debug will start. You can click on the glasses to see the individual steps.
+- If everything looks good, you can click on `Publish All` to publish the pipeline.
+- Now you can go ahead and trigger the pipeline by clicking on `Add Trigger` and select `Trigger Now`
+- When the pipeline is running you can monitor the progress in the `Monitor` tab.
+- You can go to synapse to check the transfer has been done successfully.
+
+## Transforming data on external compute
+
+While the native functionality inside Mapping Dataflows gives you the ability to transform the data with no-code user 
+interface, it is also possible to transform the data using the external compute environments with code. Below are some 
+examples:
+- Execute a stored procedure on an external database like Azure SQL DB or Synapse Dedicated Pool
+- Execute Azure Function developed with Python, C#, Java etc.
+- Execute a Notebook on Azure Databricks or Synapse Spark pool
   
 
 

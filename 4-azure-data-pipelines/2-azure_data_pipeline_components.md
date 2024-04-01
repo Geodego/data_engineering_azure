@@ -18,7 +18,7 @@ Organizations have been accumulating vast amounts of structured and unstructured
 analyze and optimize the process with data analytics. This helps meet various objectives such as cost savings, 
 generating more revenues, developing new products, and improving customer satisfaction.
 
-As organizations migrate more data workloads to Cloud platforms such as Azure, the need for automated and petabyte-scale 
+As organizations migrate more data workloads to Cloud platforms such as Azure, the need for automated and scalable petabyte-scale 
 data movement and transformation is crucial for faster decision-making with the data. The right answer for this 
 challenge is to leverage Azure Data Factory or Azure Synapse Pipelines.
 
