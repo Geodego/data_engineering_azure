@@ -162,7 +162,7 @@ Most computational frameworks are organized into a master-worker hierarchy:
 There are four different modes to setup Spark:
 - Local mode: In this case, everything happens on a single machine. So, while we use spark's APIs, we don't really do 
 any distributed computing. The local mode can be useful to learn syntax and to prototype your project.
-- distributed mode: The other three modes are distributed and declare a cluster manager. The cluster manager is a 
+- distributed mode: The other three nodes are distributed and declare a cluster manager. The cluster manager is a 
 separate process that monitors available resources and makes sure that all machines are responsive during the job. 
 There are three different options of cluster managers:
   - Spark's own Standalone Cluster Manager. In Spark's Standalone mode there is a Driver Process. If you open a Spark 

@@ -66,6 +66,9 @@ In the `Advanced` tab and enable the `hierarchy namespace` feature. That will ma
 
 To use the Azure Data Factory, click on `Open ` 
 
+### Create Synapse Analytics Workspace
+see [Azure Data Lake Gen2](https://github.com/Geodego/data_engineering_azure/blob/master/2-data_warehouses/6-Azure_tools_configuration.md#Azure-Synapse)
+
 
 
 ## Pipeline Component: Linked Services 

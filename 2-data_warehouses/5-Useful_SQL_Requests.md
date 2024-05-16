@@ -65,6 +65,9 @@ Example:
 SELECT OrderDate, EXTRACT(ISODOW FROM OrderDate) AS ISOWeekday
 FROM Orders;
 ```
+In SQL, the EXTRACT function is used to retrieve specific parts of a date or timestamp, such as the year, month, day, 
+hour, etc. This function is part of the SQL standard and is available in many SQL database systems, including 
+PostgreSQL, which supports a variety of date/time functions and formats.
 
 ### ETL the data from 3NF tables to Facts & Dimension Tables
 ```sql
@@ -92,6 +95,25 @@ JOIN dimDate  on (dimDate.date_key   = factSales.date_key)
 JOIN dimStore on (dimStore.store_key = factSales.store_key)
 GROUP by cube(dimDate.month,  dimStore.country);
 ```
+Example output:
+The following table provides a summary of sales revenue across different months and countries, including sub-totals and 
+grand total.
+
+| Month    | Country | Revenue |
+|----------|---------|---------|
+| January  | USA     | 1000    |
+| January  | Canada  | 1500    |
+| February | USA     | 1200    |
+| February | Canada  | 1300    |
+| January  | **ALL** | 2500    | <!-- Sub-total for January -->
+| February | **ALL** | 2500    | <!-- Sub-total for February -->
+| **ALL**  | USA     | 2200    | <!-- Sub-total for USA -->
+| **ALL**  | Canada  | 2800    | <!-- Sub-total for Canada -->
+| **ALL**  | **ALL** | 5000    | <!-- Grand total -->
+
+Notes:
+- `ALL` indicates the sub-totals for all months or all countries.
+
 
 ### GROUPING SETS
 

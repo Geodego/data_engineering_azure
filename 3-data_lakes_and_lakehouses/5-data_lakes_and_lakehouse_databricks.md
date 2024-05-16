@@ -2,6 +2,50 @@
 
 ## Table of Contents
 
+1. [Introduction](#introduction)
+   - [Building a data lake](#building-a-data-lake)
+   - [Building Lakehouse Architecture with Delta Lake in Azure Databricks](#building-lakehouse-architecture-with-delta-lake-in-azure-databricks)
+
+2. [Data Lake and Lakehouse on Azure](#data-lake-and-lakehouse-on-azure)
+
+3. [Azure Data Lake Gen 2](#azure-data-lake-gen-2)
+
+4. [Delta Lake using Azure Databricks](#delta-lake-using-azure-databricks)
+   - [Uploading files to Delta using Databricks DBFS](#uploading-files-to-delta-using-databricks-dbfs)
+   - [Ingesting Data into Delta Lake](#ingesting-data-into-delta-lake)
+   - [Creating and Deleting Tables](#creating-and-deleting-tables)
+   - [Reading and Writing Data](#reading-and-writing-data)
+
+5. [Stages of Data Processing](#stages-of-data-processing)
+   - [Bronze Stage](#bronze-stage)
+   - [Silver Stage](#silver-stage)
+   - [Gold Stage](#gold-stage)
+
+6. [Integrating Azure Tools](#integrating-azure-tools)
+   - [Azure Data Factory](#azure-data-factory)
+   - [Azure Synapse Analytics](#azure-synapse-analytics)
+   - [Power BI](#power-bi)
+
+7. [Data Governance and Security](#data-governance-and-security)
+   - [Data Access Controls](#data-access-controls)
+   - [Data Encryption](#data-encryption)
+   - [Compliance](#compliance)
+
+8. [Performance Optimization](#performance-optimization)
+   - [Delta Caching](#delta-caching)
+   - [Data Partitioning](#data-partitioning)
+   - [Indexing](#indexing)
+
+9. [Monitoring and Maintenance](#monitoring-and-maintenance)
+   - [Monitoring Data Pipelines](#monitoring-data-pipelines)
+   - [Managing Databricks Clusters](#managing-databricks-clusters)
+   - [Automating Maintenance Tasks](#automating-maintenance-tasks)
+
+10. [Case Studies and Best Practices](#case-studies-and-best-practices)
+    - [Real-world Implementations](#real-world-implementations)
+    - [Lessons Learned](#lessons-learned)
+    - [Best Practices for Data Lakes and Lakehouse](#best-practices-for-data-lakes-and-lakehouse)
+
 ## Introduction
 
 Microsoft Azure has options for building both a traditional data lake as well as a modern lakehouse with databricks:
@@ -52,9 +96,9 @@ To ingest data into Delta Lake, there are four ways:
 - ADF Copy
 - Optimized Spark scripts
 
-We will focus on using Spark Scripts to ingest data from the DBFS into Delta tables. To use the Spark API to ingest data 
-from the DBFS into Delta, first, we read the file in, in this case using the CSV file format. The statement reads 
-directly from the DBFS filestore and creates a data frame, here named “df”.
+We will focus on using Spark Scripts to ingest data from the DBFS (Databricks File System) into Delta tables. To use the 
+Spark API to ingest data from the DBFS into Delta, first, we read the file in, in this case using the CSV file format. 
+The statement reads directly from the DBFS filestore and creates a data frame, here named “df”.
 ```python
 df = spark.read.format("csv") \
   .option("sep", ",") \

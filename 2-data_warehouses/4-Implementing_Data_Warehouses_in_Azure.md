@@ -153,7 +153,7 @@ needs to be loaded into the dedicated SQL pool, optimizing the use of resources.
 
 - **Efficient Data Management**: By providing a queryable view over external data, external tables do not duplicate the 
 data within the dedicated SQL pool’s storage. This approach maintains efficiency in data handling and minimizes 
-- unnecessary data movement, offering a streamlined workflow for data processing and integration.
+unnecessary data movement, offering a streamlined workflow for data processing and integration.
 
 In a dedicated SQL pool within Azure Synapse Analytics, the data you would typically save and manage is structured data 
 that is used for intensive querying, reporting, and analysis as part of your data warehousing strategy. This data is 
