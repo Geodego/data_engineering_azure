@@ -105,3 +105,34 @@ extract the data and every target object to store the data.
 - `Table name`: select the table you want to use
 - keep the default option for the `import schema` option
 - click on `publish all` to save the datasets
+
+## Integration Runtimes
+
+The Integration Runtime(IR) is the compute leveraged to perform all the data integration activities in ADF or Synapse 
+Pipelines. These activities include:
+- Data Flow: Execute a Data Flow in the compute environment.
+- Data movement: Copy data across data stores in a public or private networks
+- Activity dispatch: Dispatch and monitor transformation activities running on external platforms such as SQL Server, Azure Databricks etc.
+- SSIS package execution: Execute legacy SQL Server Integration Services (SSIS) packages.
+
+Types of Integration Runtimes:
+
+You are allowed to create three different types of Integration types as explained below:
+- Azure IR: Perform data flows, data movement between cloud data stores. It can also be used to dispatch activities to 
+external compute such as Databricks, .NET activity, SQL Server Stored Procedure etc. that are in public network or using 
+private network link. Azure IR is fully managed, serverless compute.
+- Self-hosted IR (SHIR): SHIR is used to perform data movement between a cloud data stores and a data store in private 
+network. It can also be used to dispatch activities to external computes on-premises or Azure Virtual Network. These 
+computes include HDInsight Hive, SQL Server Stored Procedure activity etc.
+- Azure-SSIS IR: This is used to lift and shift the existing SSIS packages to execute in Azure.
+
+Integration Runtime Location:
+
+It is important to learn how the location of the IR operates. When you create an IR in a region, it stores the metadata 
+in that region and triggers the pipelines in that region.
+
+The pipelines can access data stores from other regions for data movement because we create linked services to those 
+data stores.
+
+
+[More about Integration Runtimes](https://docs.microsoft.com/en-us/azure/data-factory/concepts-integration-runtime)
