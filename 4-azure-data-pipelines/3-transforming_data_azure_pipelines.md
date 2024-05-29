@@ -142,6 +142,31 @@ examples:
 - Execute a stored procedure on an external database like Azure SQL DB or Synapse Dedicated Pool
 - Execute Azure Function developed with Python, C#, Java etc.
 - Execute a Notebook on Azure Databricks or Synapse Spark pool
+
+### Exercise: Notebooks using Synapse Pipelines
+
+In Synapse Studio:
+- If you do not have a Spark pool, you need to create one.
+- In Synapse Studio navigate to Azure Data Lake Storage Gen2 and upload a csv file of your choice into the container. 
+Note: If you would like to use your files under your preferred Azure Storage account then you need to create a linked 
+service inside Synapse Studio and grant "Storage Blob Contributor" role for the Synapse Workspace on the storage 
+account.
+- Right click on the uploaded file and select New Notebook-> Load to Dataframe. You will see sample code populated 
+automatically to load the data from the file:
+```python
+df = spark.read.load('abfss://yourcontainer@yourstorage.dfs.core.windows.net/salesdata_2020.csv', format='csv', header=True)
+display(df.limit(10))
+```
+- Add the code similar to below to save that data into a Spark table:
+```python
+spark.sql("CREATE DATABASE IF NOT EXISTS schemaname")
+df.write.mode("overwrite").saveAsTable("schemaname.tablename")
+```
+- Publish the notebook 
+- go to Integrate Hub in Synapse Studio and create a Pipeline to execute the above Notebook. Monitor the pipeline and 
+fix any errors.
+- After successful execution of the Pipeline, Navigate to Data hub and see the newly created table under Workspace and 
+Lake Database section.
   
 
 

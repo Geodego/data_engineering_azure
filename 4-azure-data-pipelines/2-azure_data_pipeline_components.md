@@ -136,3 +136,15 @@ data stores.
 
 
 [More about Integration Runtimes](https://docs.microsoft.com/en-us/azure/data-factory/concepts-integration-runtime)
+
+### Creating an Integration Runtime
+In ADF there is an existing Integration Runtime called "AutoResolveIntegrationRuntime" that is used to run the pipelines.
+You can also create a new Integration Runtime for your ADF within in the same region as your Resource Group.
+- Login to ADF and verify that there is already an existing Integration Runtime called "AutoResolveIntegrationRuntime" 
+under Manage-> Integration Runtimes
+- Create a new Integration Runtime for your ADF within in the same region as your Resource Group
+  - click on `+ New` 
+  - click on `Azure` and give it a name
+  - Instead of selecting the `Auto Resolve` option we want to select a region 
+  - under `Data flow runtime` you need to select the ideal `Time to live`, if there are no workloads running for a
+    certain amount of time the IR will be automatically stopped
