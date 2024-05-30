@@ -144,6 +144,49 @@ examples:
 - Execute a Notebook on Azure Databricks or Synapse Spark pool
 
 ### Exercise: Notebooks using Synapse Pipelines
+Within ADF, you have options to execute a Databrick Notebook or Azure function. In this exercise, we will execute a
+notebook using Synapse Pipelines.
+- to create linked services uou need to click on the `Manage` tab and then on `Linked Services`
+- To create the datasets after having created the linked services, you need to click on the `Data` tab and select the
+    `Linked` tab. Under the `integration dataset`, you will be creating the datasets.
+- In the `Develop` tab, you can create the data flows and the pipelines.
+- In the `Integrate` tab you will be creating the pipelines where it will be calling various activities like dataflows 
+or Notebooks.
+
+Before we create the Notebook, we want to upload a sample file to the Synapse storage account.
+- Go to the `Data` tab and click on the `Linked` tab. Expand the `Azure Data Lake Storage Gen2` and expand the storage
+account attached to synapse. You can upload your files here, or keep them in a different storage account, create a linked
+service to that storage account and use these files. In this example, we use the attached storage account to synapse.
+Upload the file here.
+- right-click on the file and select `New Notebook` and then `Load to Dataframe`. This will create a notebook with the
+code to load the data from the file.
+
+Now we want to save the data into a Spark table. 
+- Go to the `Develop` tab and click on the `Notebooks` tab. You will see the notebook you've created.
+- We need to create the compute to run this Notebook.
+- Go to the `Manage` tab and click on the `Apache Spark Pools`. If you don't have a Spark pool, you need to create one.
+- Back to the Notebook, on the top select the Spark pool you've created next to `Attach to` and click on `Run`
+- In the next cell, add the code to save the data into a Spark table: "sales". For example:
+```python
+spark.sql("CREATE DATABASE IF NOT EXISTS sales")
+df.write.mode("overwrite").saveAsTable("sales")
+```
+- To verify the table has been created, in the next cell, add the code:
+```python
+df = spark.sql("SELECT * FROM sales")
+display(df.limit(10))
+```
+- Publish the notebook
+
+Now we want to create a pipeline to execute this notebook.
+- Go to the `Integrate` tab and click on the `+` to create a new pipeline
+- In `Activities` select `Synapse`, drag the `Notebook` activity to the pipeline and click on `Settings`
+- In the `Settings`:
+  - select the Notebook you've created
+  - specify the Spark pool
+- click on `Validate` and then `Publish All`
+- Trigger the pipeline by clicking on `Add Trigger` and select `Trigger Now`
+- You can track the status in the Monitor tab, similar to ADF.
 
 In Synapse Studio:
 - If you do not have a Spark pool, you need to create one.
@@ -167,6 +210,40 @@ df.write.mode("overwrite").saveAsTable("schemaname.tablename")
 fix any errors.
 - After successful execution of the Pipeline, Navigate to Data hub and see the newly created table under Workspace and 
 Lake Database section.
+
+## Power Query Transformations
+
+Power Query is a data transformation engine with a powerful and easy to use interface to connect to the data sources, 
+extract and transform the data. It is embedded into many Microsoft products such as Excel, Power BI. Microsoft has 
+recently embedded Power Query into Azure Data Factory.
+
+Power Query engine uses a scripting language called M. Since Azure Data Factory uses Apache Spark behind the scene, 
+when the Power Query is inserted into the pipeline, the M language data types are automatically convert into Spark data 
+types.
+
+[Documentation](https://docs.microsoft.com/en-us/power-query/power-query-what-is-power-query) for more information on 
+Power Query.
+
+### Exercise: Power Query in Azure Data Factory
+In this demo, we use power query for transforming the data in Azure Data Factory.
+- Go to the `Author` tab and click on the `...` near `Power Query` and select the source SQL database
+- Give a name to this power query
+- On the left of the interface you can see the source table that is connected.
+- The interface is similar to excel. For example, you can select `Filter rows`. You'll see this filter activity on the
+right side of the screen under `Applied Steps`.
+- After you've done the transformation, you can click on `Publish All` to publish the power query.
+- Now let's create a pipeline to execute this power query:
+  - create a new pipeline
+  - drag the `Power Query` activity to the pipeline:
+    - in the settings, select the power query you've created
+    - in the `sink` select where you want to store the data. For example the synapse table you've created.
+    - select a `staging linked service` and a `staging folder`. 
+- Give a name to the pipeline and click on `Publish All`
+- Trigger the pipeline by clicking on `Add Trigger` and select `Trigger Now`
+
+The staging linked service specifies the storage account that Power Query uses for intermediate data storage during the 
+transformation process. The staging directory within this linked service defines the exact location (typically a folder) 
+in the storage account where the intermediate data will be stored.
   
 
 
