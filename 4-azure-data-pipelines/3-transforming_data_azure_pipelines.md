@@ -2,6 +2,19 @@
 
 ## Table of Contents
 
+- [Introduction](#introduction)
+- [Mapping Data Flows](#mapping-data-flows)
+  - [Expression Builder](#expression-builder)
+  - [Example: Mapping Data Flow in Azure Data Factory](#example-mapping-data-flow-in-azure-data-factory)
+- [Transform and Aggregate Data Using Data Flows](#transform-and-aggregate-data-using-data-flows)
+- [Create Pipeline Activity](#create-pipeline-activity)
+- [Debug and Trigger Pipelines](#debug-and-trigger-pipelines)
+  - [Exercise: Debug and Trigger Pipelines](#exercise-debug-and-trigger-pipelines)
+- [Transforming Data on External Compute](#transforming-data-on-external-compute)
+  - [Exercise: Notebooks Using Synapse Pipelines](#exercise-notebooks-using-synapse-pipelines)
+- [Power Query Transformations](#power-query-transformations)
+  - [Exercise: Power Query in Azure Data Factory](#exercise-power-query-in-azure-data-factory)
+
 ## Introduction
 
 Data pipelines contain transformation logic to manipulate data views. You can execute transformation logic such as:
