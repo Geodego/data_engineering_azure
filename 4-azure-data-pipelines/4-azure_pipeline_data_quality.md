@@ -1,6 +1,15 @@
 # Azure Pipeline Data Quality
 
 ## Table of Contents
+- [Introduction](#introduction)
+- [Optimizing Dataflows](#optimizing-dataflows)
+  - [Tuning of the Integration Runtime](#tuning-of-the-integration-runtime)
+  - [Partition Data During Transformation](#partition-data-during-transformation)
+  - [Schema Drift](#schema-drift)
+- [Slowly Changing Dimensions](#slowly-changing-dimensions)
+- [Data Governance with Azure Purview](#data-governance-with-azure-purview)
+  - [Demo Azure Purview](#demo-azure-purview)
+
 
 ## Introduction
 
