@@ -100,3 +100,34 @@ you can also create all the ADF components like linked services, datasets, but y
 to the command like JSON files.
 ADF or synapse pipeline creates the json scripts for every object. On the right of the name of the object click on the
 flow brackets `{}` to see the JSON script.
+
+## Pipeline Continuous Integration and Delivery
+
+Continuous Integration(CI) and Continuous Delivery(CD) is a DevOps process of iteratively developing or changing the 
+code or ADF Pipelines and promoting to target environments. This is possible by integrating the Azure Data Factory or 
+Synapse Workspace with Azure DevOps or Github. You can also use the ARM (Azure Ressource Management) templates to 
+promote the Pipelines to target environments.
+
+[Typical CI/CD process:](https://docs.microsoft.com/en-us/azure/data-factory/continuous-integration-delivery)
+
+<img src="./0-images/chap5/ci-cd.png" alt="ci-cd.png" width=567 />
+
+### Steps to integrate ADF with DevOps
+
+Purpose is to link a DevOps repo and publish all your ADF or Synapse objects into the repo.
+
+<img src="./0-images/chap5/automated_pipeline.png" alt="ci-cd.png" width=700 />
+
+- Login to your preferred DevOps repo environment like Azure DevOps or Github. If you choose Azure DevOps then you need
+to go to the Azure DevOps portal and create a project.
+- Create a source repository where you need the objects to be stored. Note: Github calls it as Repositories
+- In ADF, `Manage` tab then `Git configuration`, Configuration and link the repo by following the instructions.
+- Notice in the ADF bar, the repo branch that will be used to store your objects and a Publish button.
+- Click on Publish to publish the objects into the repo. If the Publish button is greyed out then all recent changes are 
+published.
+- Login to your DevOps environment and verify that the objects are published.
+- At this point you can work with DevOps engineer in your organization to create the DevOps pipelines to perform the 
+migrations to QA or Prod environments.
+
+If you would like to perform the migrations yourself then you can find the remaining DevOps steps under this link:
+[operiationalize ADF pipelines](https://docs.microsoft.com/en-us/learn/modules/operationalize-azure-data-factory-pipelines/)
