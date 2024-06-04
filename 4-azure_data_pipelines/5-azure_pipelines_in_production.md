@@ -2,6 +2,14 @@
 
 ## Table of Contents
 
+- [Introduction](#introduction)
+- [Parameterizing Pipelines](#parameterizing-pipelines)
+  - [Method for adding parameters to a dataflow](#method-for-adding-parameters-to-a-dataflow)
+- [Creating ADF Objects Programmatically](#creating-adf-objects-programmatically)
+  - [Method for creating ADF Objects with Azure CLI](#method-for-creating-adf-objects-with-azure-cli)
+- [Pipeline Continuous Integration and Delivery](#pipeline-continuous-integration-and-delivery)
+  - [Steps to integrate ADF with DevOps](#steps-to-integrate-adf-with-devops)
+
 ## Introduction
 After you build your data pipelines, you’ll need to consider how they’ll be used in production:
 - How will you set values for database names or credentials in a reusable way?
