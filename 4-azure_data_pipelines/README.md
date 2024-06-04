@@ -2,7 +2,6 @@
 
 ## Table of Contents
 - [Introduction to Data Pipelines](https://github.com/Geodego/data_engineering_azure/blob/master/4-azure_data_pipelines/1-introduction_data_pipelines.md)
-- (4-azure-data-pipelines/1-introduction_data_pipelines.md)
 - [Azure Data Pipeline Components](https://github.com/Geodego/data_engineering_azure/blob/master/4-azure_data_pipelines/2-azure_data_pipeline_components.md)
 - [Transforming Data in Azure Data Pipelines](https://github.com/Geodego/data_engineering_azure/blob/master/4-azure_data_pipelines/3-transforming_data_azure_pipelines.md)
 - [Azure Pipeline Data quality](https://github.com/Geodego/data_engineering_azure/blob/master/4-azure_data_pipelines/4-azure_pipeline_data_quality.md)
