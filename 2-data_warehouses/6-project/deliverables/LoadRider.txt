@@ -6,6 +6,7 @@ WITH (
 );
 GO
 
+-- The data source is the location of the blob storage where we extracted the data
 IF NOT EXISTS (SELECT * FROM sys.external_data_sources WHERE name = 'data_uproject2_dfs_core_windows_net')
 	CREATE EXTERNAL DATA SOURCE [data_uproject2_dfs_core_windows_net]
 	WITH (

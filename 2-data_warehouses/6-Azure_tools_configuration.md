@@ -161,11 +161,13 @@ Ingest, Explore and analyze, Visualize.
 - Password: The password you set for the PostgreSQL database in Azure.
 
 ## Ingesting data into Azure Synapse Analytics Workspace
+
+### Creating linked services
 This show how to create linked services to ingest data into Azure Synapse Analytics Workspace. 
 - Withing the workspace use the left hand menu to navigate to the `Manage` tab. 
 - Then select `Linked services`. 
 - To add a new linked service, click on the `+` sign on the top of the screen.
-- PostgreSQL:
+- **Linked service to PostgreSQL**:
   - Search for `PostgreSQL` and select `Azure Database for PostgreSQL` (which you've already created) from the 2 possible 
   options. click on `Continue`
   - keep the default name 
@@ -177,15 +179,15 @@ This show how to create linked services to ingest data into Azure Synapse Analyt
   - `Encryption method`: choose `RequestSSL`
   - Test the connection by clicking on the `Test connection` button
   - click on `Create`
-- Azure Blob Storage:
+- **Linked service to Azure Blob Storage**:
   - select `Azure Blob Storage` from the list of options and click on `Continue`
   - keep the default name
   - In `Account Selection Method` select `From Azure subscription`.
-  - In `Storage account name` select the storage account you want to connect to. In our case it is 'udacitydemoc2'.
+  - In `Storage account name` select the storage account you want to connect to. In our case it is 'udacitydemo2'.
   - test the connection by clicking on the `Test connection` button
   - click on `Create`
 
-## Ingesting Data into Blob Storage
+### Ingesting Data into Blob Storage
 Now that we have created our linked services, we have a link to Azure Blob Storage and a link to Azure PostgreSQL. We
 want to ingest data from PostgresSQL into Blob Storage. To do this we can use a shortcut in the home screen.
 - In the home screen, select `Ingest`. This is to perform a onetime or scheduled data load.
@@ -254,7 +256,10 @@ default built-in serverless SQL pool.
     - Select the 3 dots near the table and select `New SQL script` and `DROP`. You can simply run the script and it will
     drop the table.
 
-**Note**: The serverless SQL pool won't allow you to create persistent tables in the database, as it has no local 
+**Note**: 
+- This example use a dedicated SQL pool. For this project we will use the default built-in serverless SQL pool.
+It can be used by selecting the `built-in` pool in `Manage`, `SQL pools`.
+- The serverless SQL pool won't allow you to create persistent tables in the database, as it has no local 
 storage. So, use `CREATE EXTERNAL TABLE AS SELECT` (CETAS) instead. CETAS is a parallel operation that creates external 
 table metadata and exports the SELECT query results to a set of files in your storage account. Therefore, use an 
 external table or a T-SQL view to create SQL tables in Synapse Built-in Serverless SQL pool.
