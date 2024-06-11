@@ -9,6 +9,7 @@
   - [Creating an Azure Data Lake Gen2 resource](#creating-an-azure-data-lake-gen2-resource)
   - [Creating an Azure Data Factory resource](#creating-an-azure-data-factory-resource)
 - [Pipeline Component: Linked Services](#pipeline-component-linked-services)
+  - [Creating a Linked Service](#creating-a-linked-service)
 - [Pipeline Components: Datasets](#pipeline-components-datasets)
   - [Creating a Dataset](#creating-a-dataset)
 
@@ -88,6 +89,33 @@ ADF and Synapse provide connectors to 100 plus data sources under the following 
 - Services and Apps: Dynamics 365, Concur, AWS Web Service, Salesforce, Snowflake etc.
 
 <img src="./0-images/chap2/linked-services.png">
+
+### Creating a Linked Service
+- click on the `Manage` tab
+- click on `Linked Services`
+- click on `+ New`
+- select the type of linked service you want to create (Azure SQl database or Azure Synapse Analytics for example)
+- Give the linked service a name, for example, `ls_sqlserver`
+
+For Azure SQL Database:
+- give a name to the linked service, eg. `ls_dbsales`
+- select the `Azure SQL Database` option
+- select the Azure Subscription
+- select the SQL Server name
+- select the database name
+- use the `SQL authentication` option, to give the username and password
+- click on `test connection` to verify the connection
+- make sure the IP address of the machine you are using is added to the firewall rules of the SQL Server
+- when the connection is successful click on `create`
+
+For storage account that will be used as a staging folder:
+- select the `Azure Data Lake Storage Gen2` option
+- give a name to the linked service, eg. `ls_sa`
+- select the Azure Subscription
+- select the storage account name
+- click on `test connection` to verify the connection
+- when the connection is successful click on `create`
+
 
 ## Pipeline Components: Datasets
 
