@@ -12,6 +12,8 @@
   - [Creating a Linked Service](#creating-a-linked-service)
 - [Pipeline Components: Datasets](#pipeline-components-datasets)
   - [Creating a Dataset](#creating-a-dataset)
+- [Integration Runtimes](#integration-runtimes)
+  - [Creating an Integration Runtime](#creating-an-integration-runtime)
 
 ## Expert Perspective: Data Pipelines
 
