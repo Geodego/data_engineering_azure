@@ -245,4 +245,73 @@ In Azure Data Factory, create a linked service to the data lake that contains th
 
 #### Check list
 - Capture screenshot of Linked Services page after successful creation
-- Save configs of Linked Services after creation (How!)
+- Save configs of Linked Services after creation 
+
+### Task 3: Create Datasets in Azure Data Factory
+
+#### Create the datasets for the 2021 Payroll file on Azure Data Lake Gen2
+- Select DelimitedText
+- Set the path to the nycpayroll_2021.csv in the Data Lake
+- Preview the data to make sure it is correctly parsed
+
+#### Repeat the same process to create datasets for the rest of the data files in the Data Lake
+- EmpMaster.csv
+- TitleMaster.csv
+- AgencyMaster.csv
+- Remember to publish all the datasets
+
+#### Create the dataset for all the data tables in SQL DB
+- dbo.NYC_Payroll_EMP_MD
+- dbo.NYC_Payroll_TITLE_MD
+- dbo.NYC_Payroll_AGENCY_MD
+- dbo.NYC_Payroll_Data_2020
+- dbo.NYC_Payroll_Data_2021
+
+#### Create the datasets for destination (target) table in Synapse Analytics
+- dataset for NYC_Payroll_Summary
+
+#### Check list
+- Capture screenshots of datasets in Data Factory
+- Save configs of datasets from Data Factory
+
+### Task 4: Create Data Flows
+In Azure Data Factory, create data flow to load 2020 Payroll data from Azure DataLake Gen2 storage to SQL db table 
+created earlier:
+- Create a new data flow
+- Select the dataset for 2020 payroll file as the source, call the source activity `source_payroll_2020`
+- Click on the + icon at the bottom right of the source, from the options choose sink. A sink will get added in the 
+dataflow. Call the sink activity `sink_payroll_2020`
+- Select the sink dataset as 2020 payroll table created in SQL db
+
+Repeat the same process to add data flow to load data for each file in Azure DataLake to the corresponding SQL DB tables.
+
+#### Check list
+- Capture screenshots of data flows in Data Factory
+- Save configs of data flows from Data Factory
+
+### Task 5: Data flow: Data Aggregation and Parameterization
+In this step, you'll extract the 2021 year data and historical data, merge and aggregate. The aggregation will be on 
+Agency Name, Fiscal Year and TotalPaid. The output will be stored both in:
+- DataLake staging area which will be used by Synapse Analytics external table (`dirstaging` directory) 
+- SQL DB table for the summary data (`NYC_Payroll_Summary` SQL table)
+
+- Create new data flow and name it `Dataflow Summary`
+- Add **source** as payroll 2020 data from SQL DB
+- Add another **source** as payroll 2021 data from SQL DB
+- Make sure to do any source to target mappings if required. This can be done by adding a **Select** activity before Union
+- Create a new **Union** activity and select both payroll datasets as the source
+- After Union, add a **Filter** activity, go to Expression builder
+  - Create a parameter named- dataflow_param_fiscalyear and give value 2020 or 2021
+  - Include expression to be used for filtering: toInteger(FiscalYear) >= $dataflow_param_fiscalyear
+- Now, choose **Derived Column** after filter
+  - Name the column: TotalPaid
+  - Add following expression: RegularGrossPaid + TotalOTPaid+TotalOtherPay
+- Add an **Aggregate** activity to the data flow next to the TotalPaid activity
+  - Under Group by, select AgencyName and FiscalYear
+  - Set the expression to sum(TotalPaid)
+- Add a **Sink** activity after the Aggregate
+  - Select the sink as summary table created in SQL db
+  - In Settings, tick Truncate table
+- Add another **Sink** activity, this will create two sinks after Aggregate
+  - Select the sink as `dirstaging` in Azure DataLake Gen2 storage
+  - In Settings, tick Clear the folder
