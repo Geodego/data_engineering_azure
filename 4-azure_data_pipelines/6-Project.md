@@ -173,9 +173,9 @@ that provide the data for the project.
   CREATE DATABASE udacity
   ```
     - You are only allowed one Synapse Analytics workspace per Azure account, a Microsoft restriction.
-    - Create a new Azure Data Lake Gen2 and file system for Synapse Analytics when you are creating the Synapse
-      Analytics
-      workspace in the Azure portal.
+    - Create a new Azure Data Lake Gen2 `uproject4` and file system `<adlsnycpayroll-yourfirstname-lastintial>` for 
+  Synapse Analytics when you 
+    - are creating the Synapse Analytics workspace in the Azure portal.
     - Define the file format, if not already, for reading/saving the data from/to a comma delimited file in blob
       storage:
       ```sql
@@ -315,3 +315,44 @@ Agency Name, Fiscal Year and TotalPaid. The output will be stored both in:
 - Add another **Sink** activity, this will create two sinks after Aggregate
   - Select the sink as `dirstaging` in Azure DataLake Gen2 storage
   - In Settings, tick Clear the folder
+
+#### Check list
+- Capture screenshot of aggregate dataflow in Data Factory
+- Save configs of aggregate dataflow from Data Factory
+
+### Task 6: Create and Run Pipeline
+
+#### Pipeline creation
+Now, that you have the data flows created it is time to bring the pieces together and orchestrate the flow.
+
+We will create a pipeline to load data from Azure DataLake Gen2 storage in SQL db for individual datasets. 
+We will perform aggregations and store the summary results back into SQL db destination table and datalake staging 
+storage directory which will be consumed by Synapse Analytics via CETAS.
+
+- Create a new pipeline
+- Include dataflows for Agency, Employee and Title to be parallel
+- Add dataflows for payroll 2020 and payroll 2021. These should run only after the initial 3 dataflows have completed
+- After payroll 2020 and payroll 2021 dataflows have completed, dataflow for aggregation should be started.
+
+<img src="./0-images/chap6/pipeline_project.jpeg" alt="ci-cd.png" width=590 />
+
+#### Trigger and Monitor Pipeline
+- Select Add trigger option from pipeline view in the toolbar
+- Choose trigger now to initiate pipeline run
+- You can go to monitor tab and check the Pipeline Runs
+- Each dataflow will have an entry in Activity runs list
+
+#### Verify Pipeline run artifacts
+- Query data in SQL DB summary table (destination table). This is one of the sinks defined in the pipeline.
+- Check the dirstaging directory in Datalake if files got created. This is one of the sinks defined in the pipeline
+- Query data in Synapse external table that points to the dirstaging directory in Datalake.
+
+#### Check list
+- Capture screenshot of pipeline resource from Data Factory
+- Save configs of pipeline from Data Factory
+- Capture screenshot of successful pipeline run. All activity runs and dataflow success indicators should be visible.
+- Capture screenshot of query from SQL DB summary table
+- Capture screenshot of `dirstaging` directory in DataLake Gen2 storage that shows file saved after pipeline run.
+- Capture screenshot of query from Synapse summary external table.
+
+
