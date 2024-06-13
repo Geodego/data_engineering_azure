@@ -329,6 +329,7 @@ We will perform aggregations and store the summary results back into SQL db dest
 storage directory which will be consumed by Synapse Analytics via CETAS.
 
 - Create a new pipeline
+- In `Move & Transform` section, add the dataflows.
 - Include dataflows for Agency, Employee and Title to be parallel
 - Add dataflows for payroll 2020 and payroll 2021. These should run only after the initial 3 dataflows have completed
 - After payroll 2020 and payroll 2021 dataflows have completed, dataflow for aggregation should be started.
@@ -343,8 +344,17 @@ storage directory which will be consumed by Synapse Analytics via CETAS.
 
 #### Verify Pipeline run artifacts
 - Query data in SQL DB summary table (destination table). This is one of the sinks defined in the pipeline.
+  - Select the Azure SQL ressource you created. Select the `Query editor` tab.
+  - create the SQL script:
+    ```sql
+    SELECT TOP 10 * FROM [dbo].[NYC_Payroll_Summary]
+    ```
 - Check the dirstaging directory in Datalake if files got created. This is one of the sinks defined in the pipeline
 - Query data in Synapse external table that points to the dirstaging directory in Datalake.
+  - In synapse:
+     ```sql
+      SELECT TOP 10 * FROM [dbo].[NYC_Payroll_Summary]
+      ```
 
 #### Check list
 - Capture screenshot of pipeline resource from Data Factory
@@ -353,5 +363,12 @@ storage directory which will be consumed by Synapse Analytics via CETAS.
 - Capture screenshot of query from SQL DB summary table
 - Capture screenshot of `dirstaging` directory in DataLake Gen2 storage that shows file saved after pipeline run.
 - Capture screenshot of query from Synapse summary external table.
+
+### Task 7: Connect your Project to Github
+In this step, you'll connect Azure Data Factory to Github
+- Login to your Github account and create a new Repo in Github
+- Connect Azure Data Factory to Github
+- Select your Github repository in Azure Data Factory
+- Publish all objects to the repository in Azure Data Factory
 
 

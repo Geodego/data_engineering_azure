@@ -116,11 +116,12 @@ at a specific time.
   - in `settings`:
     - select the data flow you've created
     - In the `run on azure` section you can select the integration runtime you created or `autoresolveintegrationruntime`
-    - In order to transfer the data to synapse, you need to select a staging folder.
+    - To transfer the data to synapse, you need to select a staging folder.
     - select the link service that you created for the staging container
     - select the container
     - click `ok`
-- You can add others activities to the pipeline and show dependencies between them with the arrows
+- You can add others activities to the pipeline and show dependencies between them with the arrows. The dependencies
+indicating the order of execution.
 - Give a name to the pipeline and click on `Publish All`
 
 ## Debug and trigger pipelines
