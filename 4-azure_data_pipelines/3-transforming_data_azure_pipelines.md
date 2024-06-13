@@ -95,6 +95,7 @@ Back to ADF:
     - click on `Data Preview` to see how the data will look like in the destination.
   - Publish the data flow
 - Create a new pipeline to test the data flow
+  - Click on `+` near `Pipelines` and select `New Pipeline`
   - Drag a data flow activity 
   - select in `settings` the data flow you've created
   - select the link service

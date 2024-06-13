@@ -60,9 +60,7 @@ that provide the data for the project.
 - Create three directories in this storage container named:
     - dirpayrollfiles
     - dirhistoryfiles
-    - dirstaging. `dirstaging` will be used by the pipelines we will create as part of the project to store staging data
-      for
-      integration with Azure Synapse.
+    - dirstaging. `dirstaging` will be used by the pipelines to store staging data for integration with Azure Synapse.
 - Upload the data files provided in the project data section to:
     - dirpayrollfiles for EmpMaster.csv, AgencyMaster.csv, TitleMaster.csv and nycpayroll_2021.csv
     - dirhistoryfiles for nycpayroll_2020.csv (historical data)
@@ -196,7 +194,7 @@ that provide the data for the project.
       IF NOT EXISTS (SELECT * FROM sys.external_data_sources WHERE name = '<adlsnycpayroll-yourfirstname-lastintial>_uproject4_dfs_core_windows_net') 
       CREATE EXTERNAL DATA SOURCE [<adlsnycpayroll-yourfirstname-lastintial>_uproject4_dfs_core_windows_net] 
       WITH ( 
-          LOCATION = 'abfss://uproject4@<adlsnycpayroll-yourfirstname-lastintial>.dfs.core.windows.net/dirstaging' 
+          LOCATION = 'abfss://<adlsnycpayroll-yourfirstname-lastintial>@uproject4.dfs.core.windows.net/dirstaging' 
       )
       GO
       ```
@@ -295,6 +293,7 @@ Agency Name, Fiscal Year and TotalPaid. The output will be stored both in:
 - DataLake staging area which will be used by Synapse Analytics external table (`dirstaging` directory) 
 - SQL DB table for the summary data (`NYC_Payroll_Summary` SQL table)
 
+then:
 - Create new data flow and name it `Dataflow Summary`
 - Add **source** as payroll 2020 data from SQL DB
 - Add another **source** as payroll 2021 data from SQL DB
@@ -304,11 +303,11 @@ Agency Name, Fiscal Year and TotalPaid. The output will be stored both in:
   - Create a parameter named- dataflow_param_fiscalyear and give value 2020 or 2021
   - Include expression to be used for filtering: toInteger(FiscalYear) >= $dataflow_param_fiscalyear
 - Now, choose **Derived Column** after filter
-  - Name the column: TotalPaid
-  - Add following expression: RegularGrossPaid + TotalOTPaid+TotalOtherPay
+  - Name the column: `TotalPaid`
+  - Add following expression: `RegularGrossPaid` + `TotalOTPaid`+ `TotalOtherPay`
 - Add an **Aggregate** activity to the data flow next to the TotalPaid activity
-  - Under Group by, select AgencyName and FiscalYear
-  - Set the expression to sum(TotalPaid)
+  - Under Group by, select `AgencyName` and `FiscalYear`
+  - Set the expression to sum(`TotalPaid`)
 - Add a **Sink** activity after the Aggregate
   - Select the sink as summary table created in SQL db
   - In Settings, tick Truncate table

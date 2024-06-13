@@ -40,8 +40,9 @@ required fields.
 - select a 'Region'
 - `Select Data Lake Storage Gen2`: 
     - select 'from subscription'
-    - `Account name`: This is the storage account where 'file system' 
-  will be created or is already created. Select `new` and type a name. e.g. 'udacitydemo2'. 
+    - `Account name`: This is the storage account where 'file system' will be created or is already created. 
+  Select `new` and type a name. e.g. 'udacitydemo2'. It must be a Data Lake Storage Gen2 account with hierarchical
+    namespace enabled.
     - `File system`: Container that will be the default data lake storage that Synapse Analytics will use. 
   Select `new` and type a name. e.g. 'udacitydemo2'
     - All the rest of the settings can be left as default.
