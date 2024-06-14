@@ -163,6 +163,8 @@ that provide the data for the project.
 
 #### Create Synapse Analytics Workspace
 
+see [Ingesting Data into Synapse Analytics](https://github.com/Geodego/data_engineering_azure/blob/master/2-data_warehouses/6-Azure_tools_configuration.md#ingesting-data-into-azure-synapse-analytics-workspace)
+
 - Create a Synapse Analytics workspace, or use one you already have created.
 - Under Synapse, you will not be allowed to run SQL commands in the default main database. Use the below command to
   create a database and then refresh the database selector dropdown and choose your created database before running
@@ -171,9 +173,8 @@ that provide the data for the project.
   CREATE DATABASE udacity
   ```
     - You are only allowed one Synapse Analytics workspace per Azure account, a Microsoft restriction.
-    - Create a new Azure Data Lake Gen2 `uproject4` and file system `<adlsnycpayroll-yourfirstname-lastintial>` for 
-  Synapse Analytics when you 
-    - are creating the Synapse Analytics workspace in the Azure portal.
+    - Select Data Lake Gen2 `uproject4` and file system `<adlsnycpayroll-yourfirstname-lastintial>` for 
+  Synapse Analytics when you are creating the Synapse Analytics workspace in the Azure portal.
     - Define the file format, if not already, for reading/saving the data from/to a comma delimited file in blob
       storage:
       ```sql
@@ -191,10 +192,10 @@ that provide the data for the project.
       source to use is the folder `dirstaging` defined previously.
       ```sql
       -- Use the same data source as used for creating the External Tables during the LOAD step.
-      IF NOT EXISTS (SELECT * FROM sys.external_data_sources WHERE name = '<adlsnycpayroll-yourfirstname-lastintial>_uproject4_dfs_core_windows_net') 
-      CREATE EXTERNAL DATA SOURCE [<adlsnycpayroll-yourfirstname-lastintial>_uproject4_dfs_core_windows_net] 
+      IF NOT EXISTS (SELECT * FROM sys.external_data_sources WHERE name = 'ExtDataSource') 
+      CREATE EXTERNAL DATA SOURCE [ExtDataSource] 
       WITH ( 
-          LOCATION = 'abfss://<adlsnycpayroll-yourfirstname-lastintial>@uproject4.dfs.core.windows.net/dirstaging' 
+          LOCATION = 'abfss://<adlsnycpayroll-yourfirstname-lastintial>@uproject4.dfs.core.windows.net' 
       )
       GO
       ```
@@ -207,13 +208,13 @@ that provide the data for the project.
       [TotalPaid] [float] NULL
       )
       WITH (
-      LOCATION = '/',
-      DATA_SOURCE = [<adlsnycpayroll-yourfirstname-lastintial>_uproject4_dfs_core_windows_net],
+      LOCATION = '/dirstaging/',
+      DATA_SOURCE = [ExtDataSource],
       FILE_FORMAT = [SynapseDelimitedTextFormat]
       )
       GO
         ```
-      the data will be stored in the ‘/’ directory in the blob storage in dirstaging (this was configured when creating
+      the data will be stored in the ‘/’ directory in the blob storage in `dirstaging` (this was configured when creating
       datasource). You can change the location as you desire. Also, change the DATA_SOURCE value, as applicable to you.
       Note that, `uproject4` is the Data Lake Gen 2 storage name, and `<adlsnycpayroll-yourfirstname-lastintial>` is the
       name of the file system (container).

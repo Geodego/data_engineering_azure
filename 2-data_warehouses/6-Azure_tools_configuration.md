@@ -225,8 +225,9 @@ default built-in serverless SQL pool.
     - Check if the dedicated SQL pool is running. If not, click on `Start` to start it.
   - Select `Linked services`:
       - Here you see the 2 linked services we created earlier when we ingested data.
-      - There is also an Azure Synapse Analytics and Azure Data Lake Storage Gen2 linked service that were created when the
-    Synapse Analytics workspace was created.
+      - There is also an Azure Synapse Analytics and Azure Data Lake Storage Gen2 linked service that were created when 
+    the Synapse Analytics workspace was created. The Azure Data Lake Storage Gen2 linked service linked to the container
+    that was defined when the Synapse workspace was created.
 - From Azure Synapse left hand menu, select `Data`: 
   - Select the `Workspace` tab. We can see our SQL database in which we have tables and external tables.
   Our staging data is going to go to the external tables.
