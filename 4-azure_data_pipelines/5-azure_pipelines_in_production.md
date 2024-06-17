@@ -140,4 +140,4 @@ published.
 migrations to QA or Prod environments.
 
 If you would like to perform the migrations yourself then you can find the remaining DevOps steps under this link:
-[operiationalize ADF pipelines](https://docs.microsoft.com/en-us/learn/modules/operationalize-azure-data-factory-pipelines/)
+[operationalize ADF pipelines](https://docs.microsoft.com/en-us/learn/modules/operationalize-azure-data-factory-pipelines/)
