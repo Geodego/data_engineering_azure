@@ -130,7 +130,9 @@ Purpose is to link a DevOps repo and publish all your ADF or Synapse objects int
 to go to the Azure DevOps portal and create a project.
 - Create a source repository where you need the objects to be stored. Note: Github calls it as Repositories
 - In ADF, `Manage` tab then `Git configuration`, Configuration and link the repo by following the instructions.
-- Notice in the ADF bar, the repo branch that will be used to store your objects and a Publish button.
+- Notice in the ADF bar, the repo branch that will be used to store your objects and a Publish button. The name of the
+branch replaces the standard `Data Factory` name. This is the branch where you will publish your work.
+- Go to the `Author` tab, every thing you see here, datasets, pipelines, linked services, dataz flows will be published
 - Click on Publish to publish the objects into the repo. If the Publish button is greyed out then all recent changes are 
 published.
 - Login to your DevOps environment and verify that the objects are published.

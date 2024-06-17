@@ -8,7 +8,7 @@
   - [Creating an Azure SQL Database resource](#creating-an-azure-sql-database-resource)
   - [Creating an Azure Data Lake Gen2 resource](#creating-an-azure-data-lake-gen2-resource)
   - [Creating an Azure Data Factory resource](#creating-an-azure-data-factory-resource)
-- [Pipeline Component: Linked Services](#pipeline-component-linked-services)
+- [Pipeline Components: Linked Services](#pipeline-components:-linked-services)
   - [Creating a Linked Service](#creating-a-linked-service)
 - [Pipeline Components: Datasets](#pipeline-components-datasets)
   - [Creating a Dataset](#creating-a-dataset)
@@ -74,7 +74,7 @@ see [Azure Data Lake Gen2](https://github.com/Geodego/data_engineering_azure/blo
 
 
 
-## Pipeline Component: Linked Services 
+## Pipeline Components: Linked Services
 A Linked Service is a pipeline component that contains the connection information needed to connect to a data source.
 
 For example in order to connect to a SQL Server database, you will need the server name, a user name and password.
@@ -93,6 +93,7 @@ ADF and Synapse provide connectors to 100 plus data sources under the following 
 <img src="./0-images/chap2/linked-services.png">
 
 ### Creating a Linked Service
+In ADF:
 - click on the `Manage` tab
 - click on `Linked Services`
 - click on `+ New`
@@ -126,6 +127,7 @@ data source objects such as database tables and files on Data Lake. You need the
 extract the data and every target object to store the data.
 
 ### Creating a Dataset
+In ADF:
 - click on the `Author` tab
 - click on `...` next to `datasets`
 - click on `New dataset`

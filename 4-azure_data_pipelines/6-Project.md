@@ -71,6 +71,7 @@ that provide the data for the project.
 
 #### Create Azure SQL DB resource and tables
 
+see [Creating Azure SQL DB](https://github.com/Geodego/data_engineering_azure/blob/master/2-data_warehouses/6-Azure_tools_configuration.md#azure-sql-database)
 - Create an Azure SQL DB resource named `db_nycpayroll`:
     - In the creation steps, you will be required to create a SQL server, create a server with Service tier: Basic
     - In Networking tab, allow both of the below options:
@@ -298,7 +299,8 @@ then:
 - Create new data flow and name it `Dataflow Summary`
 - Add **source** as payroll 2020 data from SQL DB
 - Add another **source** as payroll 2021 data from SQL DB
-- Make sure to do any source to target mappings if required. This can be done by adding a **Select** activity before Union
+- Make sure to do any source to target mappings if required. This can be done by adding a **Select** activity before 
+the `Union` activity
 - Create a new **Union** activity and select both payroll datasets as the source
 - After Union, add a **Filter** activity, go to Expression builder
   - Create a parameter named- dataflow_param_fiscalyear and give value 2020 or 2021
