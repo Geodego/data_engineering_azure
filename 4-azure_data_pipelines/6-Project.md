@@ -74,9 +74,10 @@ that provide the data for the project.
 see [Creating Azure SQL DB](https://github.com/Geodego/data_engineering_azure/blob/master/2-data_warehouses/6-Azure_tools_configuration.md#azure-sql-database)
 - Create an Azure SQL DB resource named `db_nycpayroll`:
     - In the creation steps, you will be required to create a SQL server, create a server with Service tier: Basic
-    - In Networking tab, allow both of the below options:
-        - Allow Azure services and resources to access this server
+    - In Networking tab, allow both of the below options (-> for that purpose you need to select `Public endpoint`):
+        - Allow Azure services and resources to access this server 
         - Add current client IP address
+For requesting the database select on the left `Query editor (preview)`
 - Create Employee Master Data table:
   ```sql
     CREATE TABLE [dbo].[NYC_Payroll_EMP_MD](
@@ -167,9 +168,9 @@ see [Creating Azure SQL DB](https://github.com/Geodego/data_engineering_azure/bl
 see [Ingesting Data into Synapse Analytics](https://github.com/Geodego/data_engineering_azure/blob/master/2-data_warehouses/6-Azure_tools_configuration.md#ingesting-data-into-azure-synapse-analytics-workspace)
 
 - Create a Synapse Analytics workspace, or use one you already have created.
-- Under Synapse, you will not be allowed to run SQL commands in the default main database. Use the below command to
-  create a database and then refresh the database selector dropdown and choose your created database before running
-  any queries:
+- Under Synapse, you will not be allowed to run SQL commands in the default main database. Go to `Develop` create a sql 
+script and use the below command to create a database and then refresh the database selector dropdown. Choose your 
+created database before running any queries:
   ```sql
   CREATE DATABASE udacity
   ```
@@ -209,7 +210,7 @@ see [Ingesting Data into Synapse Analytics](https://github.com/Geodego/data_engi
       [TotalPaid] [float] NULL
       )
       WITH (
-      LOCATION = '/dirstaging/',
+      LOCATION = '/dirstaging/NYC_Payroll_Summary',
       DATA_SOURCE = [ExtDataSource],
       FILE_FORMAT = [SynapseDelimitedTextFormat]
       )
@@ -258,6 +259,7 @@ In Azure Data Factory, create a linked service to the data lake that contains th
 - EmpMaster.csv
 - TitleMaster.csv
 - AgencyMaster.csv
+- nycpayroll_2020.csv
 - Remember to publish all the datasets
 
 #### Create the dataset for all the data tables in SQL DB
@@ -266,9 +268,10 @@ In Azure Data Factory, create a linked service to the data lake that contains th
 - dbo.NYC_Payroll_AGENCY_MD
 - dbo.NYC_Payroll_Data_2020
 - dbo.NYC_Payroll_Data_2021
+- dbo.NYC_Payroll_Summary
 
 #### Create the datasets for destination (target) table in Synapse Analytics
-- dataset for NYC_Payroll_Summary
+- dataset for NYC_Payroll_Summary (csv?)
 
 #### Check list
 - Capture screenshots of datasets in Data Factory
