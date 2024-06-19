@@ -210,7 +210,7 @@ created database before running any queries:
       [TotalPaid] [float] NULL
       )
       WITH (
-      LOCATION = '/dirstaging/NYC_Payroll_Summary',
+      LOCATION = '/dirstaging/',
       DATA_SOURCE = [ExtDataSource],
       FILE_FORMAT = [SynapseDelimitedTextFormat]
       )
@@ -271,7 +271,11 @@ In Azure Data Factory, create a linked service to the data lake that contains th
 - dbo.NYC_Payroll_Summary
 
 #### Create the datasets for destination (target) table in Synapse Analytics
-- dataset for NYC_Payroll_Summary (csv?)
+- dataset for NYC_Payroll_Summary:
+  - Datastore: Azure Data Lake Storage Gen2
+  - File format: DelimitedText
+  - Linked service connected to the Data Lake Gen2 storage
+  - Path: /dirstaging/
 
 #### Check list
 - Capture screenshots of datasets in Data Factory
