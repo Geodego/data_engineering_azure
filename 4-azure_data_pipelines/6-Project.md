@@ -60,13 +60,15 @@ that provide the data for the project.
 - Create three directories in this storage container named:
     - dirpayrollfiles
     - dirhistoryfiles
-    - dirstaging. `dirstaging` will be used by the pipelines to store staging data for integration with Azure Synapse.
+    - dirstaging
+  `dirstaging` will be used by the pipelines to store staging data for integration with Azure Synapse.
 - Upload the data files provided in the project data section to:
     - dirpayrollfiles for EmpMaster.csv, AgencyMaster.csv, TitleMaster.csv and nycpayroll_2021.csv
     - dirhistoryfiles for nycpayroll_2020.csv (historical data)
 
 #### Create Azure Data Factory resource
 
+see [Creating Azure Data Factory](https://github.com/Geodego/data_engineering_azure/blob/master/4-azure_data_pipelines/2-azure_data_pipeline_components.md#creating-an-azure-data-factory-resource)
 - Create an Azure Data Factory resource
 
 #### Create Azure SQL DB resource and tables
@@ -77,6 +79,7 @@ see [Creating Azure SQL DB](https://github.com/Geodego/data_engineering_azure/bl
     - In Networking tab, allow both of the below options (-> for that purpose you need to select `Public endpoint`):
         - Allow Azure services and resources to access this server 
         - Add current client IP address
+      
 For requesting the database select on the left `Query editor (preview)`
 - Create Employee Master Data table:
   ```sql
@@ -165,14 +168,14 @@ For requesting the database select on the left `Query editor (preview)`
 
 #### Create Synapse Analytics Workspace
 
-see [Ingesting Data into Synapse Analytics](https://github.com/Geodego/data_engineering_azure/blob/master/2-data_warehouses/6-Azure_tools_configuration.md#ingesting-data-into-azure-synapse-analytics-workspace)
+see [Create Synapse Analytics workspace](https://github.com/Geodego/data_engineering_azure/blob/master/2-data_warehouses/6-Azure_tools_configuration.md#create-a-synapse-workspace)
 
 - Create a Synapse Analytics workspace, or use one you already have created.
 - Under Synapse, you will not be allowed to run SQL commands in the default main database. Go to `Develop` create a sql 
 script and use the below command to create a database and then refresh the database selector dropdown. Choose your 
 created database before running any queries:
   ```sql
-  CREATE DATABASE udacity
+  CREATE DATABASE udacity;
   ```
     - You are only allowed one Synapse Analytics workspace per Azure account, a Microsoft restriction.
     - Select Data Lake Gen2 `uproject4` and file system `<adlsnycpayroll-yourfirstname-lastintial>` for 
@@ -242,6 +245,7 @@ In Azure Data Factory, create a linked service to the data lake that contains th
 
 #### Create Linked Services in Azure SQL DB
 - Create a Linked Service to SQL Database that has the current (2021) data
+- in `version` select legacy
 - If you get a connection error, remember to add the IP address to the firewall settings in SQL DB in the Azure Portal
 
 #### Check list
