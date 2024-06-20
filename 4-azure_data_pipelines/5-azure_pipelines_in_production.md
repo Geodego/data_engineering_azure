@@ -62,6 +62,7 @@ Now you can create a pipeline that uses the dataflow and pass the parameter to t
 - select the integration runtime
 - select a staging folder and select a container
 - create another parameter at the pipeline level
+- Click on the canvas so that none of the dataflow steps is highlighted.
 - select `Parameters` and click on `+ New`
 - we need to pass the pipeline parameter to the dataflow: 
   - select the dataflow

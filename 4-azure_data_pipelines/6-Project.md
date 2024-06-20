@@ -314,7 +314,7 @@ then:
 the `Union` activity
 - Create a new **Union** activity and select both payroll datasets as the source
 - After Union, add a **Filter** activity, go to Expression builder
-  - Create a parameter named- dataflow_param_fiscalyear and give value 2020 or 2021
+  - Create a parameter named- dataflow_param_fiscalyear and give value 2020 or 2021 ([How to create parameters](https://github.com/Geodego/data_engineering_azure/blob/master/4-azure_data_pipelines/5-azure_pipelines_in_production.md#method-for-adding-parameters-to-a-dataflow))
   - Include expression to be used for filtering: toInteger(FiscalYear) >= $dataflow_param_fiscalyear
 - Now, choose **Derived Column** after filter
   - Name the column: `TotalPaid`
