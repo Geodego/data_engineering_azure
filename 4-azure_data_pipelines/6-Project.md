@@ -45,6 +45,8 @@ that provide the data for the project.
 
 ## Instructions
 
+Note: issue with dataflow emp, column agency start date in data tables, and sink in azure datalake.
+
 ### Task 1: Create and Configure Resources
 
 #### Create the data lake and upload data
@@ -235,6 +237,8 @@ created database before running any queries:
   - Above 5 tables created in SQL db 
   - External table created in Synapse
 
+-> how do you check the external table in Synapse?
+
 
 ### Task 2: Create Linked Services 
 
@@ -288,13 +292,17 @@ In Azure Data Factory, create a linked service to the data lake that contains th
 ### Task 4: Create Data Flows
 In Azure Data Factory, create data flow to load 2020 Payroll data from Azure DataLake Gen2 storage to SQL db table 
 created earlier:
-- Create a new data flow
+- Create a new data flow `dataflow_payroll2020`
 - Select the dataset for 2020 payroll file as the source, call the source activity `source_payroll_2020`
 - Click on the + icon at the bottom right of the source, from the options choose sink. A sink will get added in the 
 dataflow. Call the sink activity `sink_payroll_2020`
 - Select the sink dataset as 2020 payroll table created in SQL db
 
-Repeat the same process to add data flow to load data for each file in Azure DataLake to the corresponding SQL DB tables.
+Repeat the same process to add data flow to load data for each file in Azure DataLake to the corresponding SQL DB tables:
+- `dataflow_payroll2021`
+- `dataflow_emp`
+- `dataflow_title`
+- `dataflow_agency`
 
 #### Check list
 - Capture screenshots of data flows in Data Factory
@@ -307,7 +315,7 @@ Agency Name, Fiscal Year and TotalPaid. The output will be stored both in:
 - SQL DB table for the summary data (`NYC_Payroll_Summary` SQL table)
 
 then:
-- Create new data flow and name it `Dataflow Summary`
+- Create new data flow and name it `dataflow_summary`
 - Add **source** as payroll 2020 data from SQL DB
 - Add another **source** as payroll 2021 data from SQL DB
 - Make sure to do any source to target mappings if required. This can be done by adding a **Select** activity before 
