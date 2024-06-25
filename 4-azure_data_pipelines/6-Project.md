@@ -215,7 +215,7 @@ created database before running any queries:
       [TotalPaid] [float] NULL
       )
       WITH (
-      LOCATION = '/dirstaging/',
+      LOCATION = '/dirstaging/summary.csv',
       DATA_SOURCE = [ExtDataSource],
       FILE_FORMAT = [SynapseDelimitedTextFormat]
       )
@@ -332,10 +332,10 @@ the `Union` activity
   - Set the expression to sum(`TotalPaid`)
 - Add a **Sink** activity after the Aggregate
   - Select the sink as summary table created in SQL db
-  - In Settings, tick Truncate table
+  - In `Settings`, tick `Truncate table`
 - Add another **Sink** activity, this will create two sinks after Aggregate
   - Select the sink as `dirstaging` in Azure DataLake Gen2 storage
-  - In Settings, tick Clear the folder
+  - In `Settings`, tick `Clear the folder`
 
 #### Check list
 - Capture screenshot of aggregate dataflow in Data Factory
