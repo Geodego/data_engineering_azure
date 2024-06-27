@@ -210,9 +210,9 @@ created database before running any queries:
       summary data:
       ```sql
       CREATE EXTERNAL TABLE [dbo].[NYC_Payroll_Summary](
-      [FiscalYear] [int] NULL,
-      [AgencyName] [varchar](50) NULL,
-      [TotalPaid] [float] NULL
+      [FiscalYear] nvarchar(4000) NULL,
+      [AgencyName] nvarchar(4000) NULL,
+      [TotalPaid] nvarchar(4000) NULL
       )
       WITH (
       LOCATION = '/dirstaging/summary.csv',
@@ -335,7 +335,10 @@ the `Union` activity
   - In `Settings`, tick `Truncate table`
 - Add another **Sink** activity, this will create two sinks after Aggregate
   - Select the sink as `dirstaging` in Azure DataLake Gen2 storage
-  - In `Settings`, tick `Clear the folder`
+  - In `Settings`:
+    - tick `Clear the folder`
+    - choose `Output to single file` and give the file name as `summary.csv`
+    
 
 #### Check list
 - Capture screenshot of aggregate dataflow in Data Factory
